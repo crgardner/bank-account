@@ -29,5 +29,13 @@ public class Person {
         return Objects.hash(firstName, lastName);
     }
 
+    public void writeTo(PersonReader reader) {
+        reader.name(firstName, lastName);
+    }
+
+    public interface PersonReader {
+        void name(String firstName, String lastName);
+    }
+
 
 }
