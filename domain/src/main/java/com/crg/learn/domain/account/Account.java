@@ -3,13 +3,15 @@ package com.crg.learn.domain.account;
 import com.crg.learn.domain.person.Person;
 import org.javamoney.moneta.Money;
 
-import javax.money.Monetary;
+import javax.money.*;
 import java.util.Objects;
 
 public class Account {
+    private static final CurrencyUnit DEFAULT_CURRENCY = Monetary.getCurrency("EUR");
+
     private final AccountNumber accountNumber;
     private final Person accountHolder;
-    private final Money balance = Money.of(0, Monetary.getCurrency("EUR"));
+    private Money balance = Money.of(0, DEFAULT_CURRENCY);
 
     public Account(AccountNumber accountNumber, Person accountHolder) {
         this.accountNumber = accountNumber;
@@ -40,6 +42,14 @@ public class Account {
             reader.ownerFirstName(first);
             reader.ownerLastName(last);
         });
+    }
+
+    public void add(Entry entry) {
+        balance = entry.adjust(balance);
+    }
+
+    public boolean hasBalanceOf(Money amount) {
+        return balance.equals(amount);
     }
 
     public interface AccountReader {

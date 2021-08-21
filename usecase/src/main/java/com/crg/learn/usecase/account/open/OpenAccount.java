@@ -2,6 +2,7 @@ package com.crg.learn.usecase.account.open;
 
 import com.crg.learn.domain.account.*;
 import com.crg.learn.domain.person.Person;
+import com.crg.learn.usecase.account.shared.AccountResponseBuilder;
 import com.crg.learn.usecase.concept.UseCase;
 
 class OpenAccount implements UseCase<OpenAccountRequest, OpenAccountResponder> {
@@ -29,7 +30,7 @@ class OpenAccount implements UseCase<OpenAccountRequest, OpenAccountResponder> {
     }
 
     private void respond(OpenAccountResponder responder, Account account) {
-        var builder = new OpenAccountResponseBuilder();
+        var builder = new AccountResponseBuilder();
 
         account.writeTo(builder);
         responder.accept(builder.build());
