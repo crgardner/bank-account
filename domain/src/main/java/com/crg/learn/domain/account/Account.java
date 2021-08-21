@@ -15,9 +15,13 @@ public class Account {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Account account = (Account) o;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Account account)) {
+            return false;
+        }
+
         return accountNumber.equals(account.accountNumber) && accountHolder.equals(account.accountHolder);
     }
 

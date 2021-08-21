@@ -16,6 +16,8 @@
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <junitVersion>5.7.2</junitVersion>
         <mockitoVersion>3.11.2</mockitoVersion>
         <assertJVersion>3.20.2</assertJVersion>

@@ -16,10 +16,14 @@ public class AccountNumber {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AccountNumber that = (AccountNumber) o;
-        return value.equals(that.value);
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof AccountNumber accountNumber))  {
+            return false;
+        }
+
+        return value.equals(accountNumber.value);
     }
 
     @Override

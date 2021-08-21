@@ -22,11 +22,11 @@ class OpenAccountTest implements OpenAccountResponder {
     @DisplayName("creates an account")
     void createsAccount() {
         var request = new OpenAccountRequest("Ford", "Prefect");
-        var useCase = new OpenAccount(bank, request, this);
+        var useCase = new OpenAccount(bank);
 
-        useCase.execute();
+        useCase.execute(request, this);
 
-        assertThat(response.accountNumber()).isEqualTo("011234567X");
+        assertThat(response).isEqualTo(new OpenAccountResponse("011234567X"));
         verify(bank).open(new Account(new AccountNumber("011234567X"), new Person("Ford", "Prefect")));
     }
 

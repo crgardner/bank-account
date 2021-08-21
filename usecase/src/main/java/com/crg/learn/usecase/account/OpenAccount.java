@@ -2,19 +2,16 @@ package com.crg.learn.usecase.account;
 
 import com.crg.learn.domain.account.*;
 import com.crg.learn.domain.person.Person;
+import com.crg.learn.usecase.concept.UseCase;
 
-class OpenAccount {
+class OpenAccount implements UseCase<OpenAccountRequest, OpenAccountResponder> {
     private final Bank bank;
-    private final OpenAccountRequest request;
-    private final OpenAccountResponder responder;
 
-    public OpenAccount(Bank bank, OpenAccountRequest request, OpenAccountResponder responder) {
+    public OpenAccount(Bank bank) {
         this.bank = bank;
-        this.request = request;
-        this.responder = responder;
     }
 
-    public void execute() {
+    public void execute(OpenAccountRequest request, OpenAccountResponder responder) {
         var accountNumber = new AccountNumber("011234567X");
         var account = new Account(accountNumber, new Person(request.firstName(), request.lastName()));
         bank.open(account);
