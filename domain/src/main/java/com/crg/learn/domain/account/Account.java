@@ -18,6 +18,14 @@ public class Account {
         this.accountHolder = accountHolder;
     }
 
+    public void add(Entry entry) {
+        balance = entry.adjust(balance);
+    }
+
+    public boolean hasBalanceOf(Money amount) {
+        return balance.equals(amount);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -42,14 +50,6 @@ public class Account {
             reader.ownerFirstName(first);
             reader.ownerLastName(last);
         });
-    }
-
-    public void add(Entry entry) {
-        balance = entry.adjust(balance);
-    }
-
-    public boolean hasBalanceOf(Money amount) {
-        return balance.equals(amount);
     }
 
     public interface AccountReader {

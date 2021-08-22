@@ -47,7 +47,7 @@ class AccountTest {
 
             @Test
             @DisplayName("has balance equal to the cumulative deposits")
-            void hasBalanceEqualToCumulativeSubsequentDeposits() {
+            void hasBalanceEqualToCumulativeDeposits() {
                 account.add(new Entry(Money.of(1000, DEFAULT_CURRENCY)));
                 account.add(new Entry(Money.of(14.35, DEFAULT_CURRENCY)));
 

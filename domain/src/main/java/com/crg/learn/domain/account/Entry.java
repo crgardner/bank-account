@@ -9,12 +9,8 @@ public class Entry {
     private final Instant whenBooked;
 
     public Entry(Money amount) {
-        this(amount, Instant.now());
-    }
-
-    public Entry(Money amount, Instant whenBooked) {
         this.amount = amount;
-        this.whenBooked = whenBooked;
+        this.whenBooked = Instant.now();
     }
 
     public Money adjust(Money balance) {
