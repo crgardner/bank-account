@@ -9,22 +9,23 @@ import javax.money.*;
 
 @DisplayName("Account")
 class AccountTest {
+    private static final CurrencyUnit DEFAULT_CURRENCY = Monetary.getCurrency("EUR");
 
-    public static final CurrencyUnit DEFAULT_CURRENCY = Monetary.getCurrency("EUR");
     private Account account;
+
+    @BeforeEach
+    void init() {
+        account = new Account(new AccountNumber("123X99948715"), new Person("Zippy", "Foo"));
+    }
 
     @Nested
     @DisplayName("when created")
     class WhenCreated {
-        @BeforeEach
-        void init() {
-            account = new Account(new AccountNumber("123"), new Person("Zippy", "Foo"));
-        }
 
         @Test
         @DisplayName("has zero balance")
         void hasZeroBalance() {
-            assertThat(account.hasBalanceOf(Money.zero(Monetary.getCurrency("EUR")))).isTrue();
+            assertThat(account.hasBalanceOf(Money.zero(DEFAULT_CURRENCY))).isTrue();
         }
 
         @Nested

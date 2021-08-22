@@ -1,8 +1,8 @@
 package com.crg.learn.usecase.account.deposit;
 
 import static org.assertj.core.api.Assertions.*;
+import com.crg.learn.domain.account.Account;
 import com.crg.learn.domain.account.*;
-import com.crg.learn.domain.person.Person;
 import com.crg.learn.usecase.account.shared.AccountResponse;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.*;
@@ -11,9 +11,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.money.*;
-
 import java.util.Optional;
 
+import static com.crg.learn.domain.testsupport.AccountMaker.*;
+import static com.natpryce.makeiteasy.MakeItEasy.*;
 import static org.mockito.Mockito.*;
 
 @DisplayName("MakeDeposit")
@@ -35,7 +36,7 @@ class MakeDepositTest implements AdjustAccountResponder {
     @BeforeEach
     void init() {
         accountNumber = new AccountNumber(ACCOUNT_NUMBER);
-        account = new Account(accountNumber, new Person("Ford", "Prefect"));
+        account = an(Account, with(number, accountNumber)).value();
         adjustAccountRequest = new AdjustAccountRequest(ACCOUNT_NUMBER, 50.20, "EUR");
         useCase = new MakeDeposit(bank);
     }

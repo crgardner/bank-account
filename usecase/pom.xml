@@ -11,11 +11,20 @@
 
     <groupId>com.crg.learning</groupId>
     <artifactId>usecase</artifactId>
+
     <dependencies>
         <dependency>
-            <groupId>com.crg.learning</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>domain</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>domain</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

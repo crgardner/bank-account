@@ -21,6 +21,7 @@
         <junitVersion>5.7.2</junitVersion>
         <mockitoVersion>3.11.2</mockitoVersion>
         <assertJVersion>3.20.2</assertJVersion>
+        <makeItEasyVersion>4.0.1</makeItEasyVersion>
     </properties>
 
     <dependencyManagement>
@@ -66,6 +67,13 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>${mockitoVersion}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.natpryce</groupId>
+            <artifactId>make-it-easy</artifactId>
+            <version>${makeItEasyVersion}</version>
             <scope>test</scope>
         </dependency>
 
