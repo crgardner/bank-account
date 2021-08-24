@@ -1,4 +1,4 @@
-package com.crg.learn.usecase.account.deposit;
+package com.crg.learn.usecase.account.adjust;
 
 import org.javamoney.moneta.Money;
 

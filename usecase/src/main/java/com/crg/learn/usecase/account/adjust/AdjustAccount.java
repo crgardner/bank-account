@@ -1,4 +1,4 @@
-package com.crg.learn.usecase.account.deposit;
+package com.crg.learn.usecase.account.adjust;
 
 import com.crg.learn.domain.account.*;
 import com.crg.learn.usecase.account.shared.AccountResponseBuilder;
@@ -8,11 +8,11 @@ import org.javamoney.moneta.Money;
 import javax.money.Monetary;
 import java.util.Optional;
 
-class MakeDeposit implements UseCase<AdjustAccountRequest, AdjustAccountResponder> {
+class AdjustAccount implements UseCase<AdjustAccountRequest, AdjustAccountResponder> {
 
     private final Bank bank;
 
-    public MakeDeposit(Bank bank) {
+    public AdjustAccount(Bank bank) {
         this.bank = bank;
     }
 
