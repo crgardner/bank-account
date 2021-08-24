@@ -4,13 +4,14 @@ import com.crg.learn.domain.person.Person;
 import org.javamoney.moneta.Money;
 
 import javax.money.*;
-import java.util.Objects;
+import java.util.*;
 
 public class Account {
     private static final CurrencyUnit DEFAULT_CURRENCY = Monetary.getCurrency("EUR");
 
     private final AccountNumber accountNumber;
     private final Person accountHolder;
+    private final AccountEntries entries = new AccountEntries();
     private Money balance = Money.of(0, DEFAULT_CURRENCY);
 
     public Account(AccountNumber accountNumber, Person accountHolder) {
@@ -20,10 +21,31 @@ public class Account {
 
     public void add(Entry entry) {
         balance = entry.adjust(balance);
+        entries.add(entry);
     }
 
     public boolean hasBalanceOf(Money amount) {
         return balance.equals(amount);
+    }
+
+    public void writeTo(AccountReader reader) {
+        reader.balance(balance);
+        accountNumber.writeTo(reader::accountNumber);
+        accountHolder.writeTo((first, last) -> {
+            reader.ownerFirstName(first);
+            reader.ownerLastName(last);
+        });
+    }
+
+    public AccountStatement createStatement() {
+        return new AccountStatement(accountNumber, accountHolder, entries.createStatement(DEFAULT_CURRENCY));
+    }
+
+    public interface AccountReader {
+        void accountNumber(String value);
+        void ownerFirstName(String value);
+        void ownerLastName(String value);
+        void balance(Money value);
     }
 
     @Override
@@ -43,19 +65,4 @@ public class Account {
         return Objects.hash(accountNumber, accountHolder);
     }
 
-    public void writeTo(AccountReader reader) {
-        reader.balance(balance);
-        accountNumber.writeTo(reader::accountNumber);
-        accountHolder.writeTo((first, last) -> {
-            reader.ownerFirstName(first);
-            reader.ownerLastName(last);
-        });
-    }
-
-    public interface AccountReader {
-        void accountNumber(String value);
-        void ownerFirstName(String value);
-        void ownerLastName(String value);
-        void balance(Money value);
-    }
 }

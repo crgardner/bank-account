@@ -9,11 +9,19 @@ public class Entry {
     private final Instant whenBooked;
 
     public Entry(Money amount) {
+        this(amount, Instant.now());
+    }
+
+    public Entry(Money amount, Instant whenBooked) {
         this.amount = amount;
-        this.whenBooked = Instant.now();
+        this.whenBooked = whenBooked;
     }
 
     public Money adjust(Money balance) {
         return balance.add(amount);
+    }
+
+    public AccountStatementLine createStatementLine(MonetaryRunningBalance runningBalance) {
+        return new AccountStatementLine(amount, whenBooked, runningBalance.adjust(amount));
     }
 }

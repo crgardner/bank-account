@@ -6,16 +6,24 @@ import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.*;
 
 import javax.money.*;
+import java.util.List;
+
+import static com.crg.learn.domain.account.BookingDates.*;
+
 
 @DisplayName("Account")
 class AccountTest {
     private static final CurrencyUnit DEFAULT_CURRENCY = Monetary.getCurrency("EUR");
 
     private Account account;
+    private AccountNumber accountNumber;
+    private Person accountHolder;
 
     @BeforeEach
     void init() {
-        account = new Account(new AccountNumber("123X99948715"), new Person("Zippy", "Foo"));
+        accountNumber = new AccountNumber("123X99948715");
+        accountHolder = new Person("Zippy", "Foo");
+        account = new Account(accountNumber, accountHolder);
     }
 
     @Nested
@@ -71,7 +79,28 @@ class AccountTest {
                 assertThat(account.hasBalanceOf(amountInDefaultCurrency(964.60))).isTrue();
             }
         }
+    }
 
+    @Test
+    @DisplayName("creates statement with all entries")
+    void createsStatementIncludingAllEntries() {
+        account.add(new Entry(amountInDefaultCurrency(100), jun_21_2021()));
+        account.add(new Entry(amountInDefaultCurrency(150), jul_03_2021()));
+        account.add(new Entry(amountInDefaultCurrency(-20), aug_20_2021()));
+
+        var statement = account.createStatement();
+
+        assertThat(statement).usingRecursiveComparison().isEqualTo(expectedStatement());
+    }
+
+    private AccountStatement expectedStatement() {
+        var lines = List.of(
+            new AccountStatementLine(amountInDefaultCurrency(100), jun_21_2021(), amountInDefaultCurrency(100)),
+            new AccountStatementLine(amountInDefaultCurrency(150), jul_03_2021(), amountInDefaultCurrency(250)),
+            new AccountStatementLine(amountInDefaultCurrency(-20), aug_20_2021(), amountInDefaultCurrency(230))
+        );
+
+        return new AccountStatement(accountNumber, accountHolder, new AccountStatementLines(lines));
     }
 
     private Money amountInDefaultCurrency(Number amount) {
