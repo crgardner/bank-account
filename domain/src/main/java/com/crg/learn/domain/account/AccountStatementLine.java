@@ -14,4 +14,8 @@ public class AccountStatementLine {
         this.whenBooked = whenBooked;
         this.balance = balance;
     }
+
+    public void writeTo(AccountStatementReader reader) {
+        reader.addLine(whenBooked, amount, balance);
+    }
 }

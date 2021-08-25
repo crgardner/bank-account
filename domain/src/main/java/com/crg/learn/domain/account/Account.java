@@ -41,13 +41,6 @@ public class Account {
         return new AccountStatement(accountNumber, accountHolder, entries.createStatement(DEFAULT_CURRENCY));
     }
 
-    public interface AccountReader {
-        void accountNumber(String value);
-        void ownerFirstName(String value);
-        void ownerLastName(String value);
-        void balance(Money value);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

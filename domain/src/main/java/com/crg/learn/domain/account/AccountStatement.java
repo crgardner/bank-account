@@ -12,4 +12,8 @@ public class AccountStatement {
         this.accountHolder = accountHolder;
         this.statementLines = statementLines;
     }
+
+    public void writeTo(AccountStatementReader reader) {
+        statementLines.writeTo(reader);
+    }
 }

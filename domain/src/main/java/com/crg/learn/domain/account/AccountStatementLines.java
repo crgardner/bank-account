@@ -8,4 +8,8 @@ public class AccountStatementLines {
     public AccountStatementLines(List<AccountStatementLine> lines) {
         this.lines = lines;
     }
+
+    public void writeTo(AccountStatementReader reader) {
+        lines.forEach(line -> line.writeTo(reader));
+    }
 }

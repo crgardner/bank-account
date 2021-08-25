@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import com.crg.learn.domain.account.Account;
 import com.crg.learn.domain.account.*;
 import com.crg.learn.usecase.account.shared.AccountResponse;
+import com.crg.learn.usecase.concept.UseCase;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +31,7 @@ class AdjustAccountTest implements AdjustAccountResponder {
     private AccountResponse response;
     private AccountNumber accountNumber;
     private Account account;
-    private AdjustAccount useCase;
+    private UseCase<AdjustAccountRequest, AdjustAccountResponder> useCase;
     private boolean accountNotFound;
 
     @BeforeEach
