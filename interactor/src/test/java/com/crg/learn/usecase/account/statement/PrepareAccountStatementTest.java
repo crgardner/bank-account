@@ -31,7 +31,6 @@ class PrepareAccountStatementTest implements PrepareAccountStatementResponder {
     private AccountNumber accountNumber;
     private Account account;
     private UseCase<PrepareAccountStatementRequest, PrepareAccountStatementResponder> useCase;
-    private PrepareAccountStatementRequest request;
     private PrepareStatementResponse response;
     private Instant june_21_2021;
     private Instant july_7_2021;
@@ -52,7 +51,7 @@ class PrepareAccountStatementTest implements PrepareAccountStatementResponder {
         account.add(new Entry(Money.of(-50, CURRENCY), july_7_2021));
         when(bank.lookup(accountNumber)).thenReturn(Optional.of(account));
 
-        request = new PrepareAccountStatementRequest(ACCOUNT_NUMBER);
+        PrepareAccountStatementRequest request = new PrepareAccountStatementRequest(ACCOUNT_NUMBER);
         useCase.execute(request, this);
 
         assertThat(response).isEqualTo(expectedResponse());

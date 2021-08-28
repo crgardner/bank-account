@@ -1,6 +1,7 @@
 package com.crg.learn.usecase.account.shared;
 
 import com.crg.learn.domain.account.*;
+import com.crg.learn.usecase.shared.AccountResponse;
 import org.javamoney.moneta.Money;
 
 public class AccountResponseBuilder implements AccountReader {

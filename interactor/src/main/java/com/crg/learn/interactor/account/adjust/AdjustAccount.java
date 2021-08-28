@@ -1,6 +1,7 @@
-package com.crg.learn.usecase.account.adjust;
+package com.crg.learn.interactor.account.adjust;
 
 import com.crg.learn.domain.account.*;
+import com.crg.learn.usecase.account.adjust.*;
 import com.crg.learn.usecase.account.shared.AccountResponseBuilder;
 import com.crg.learn.usecase.concept.UseCase;
 import org.javamoney.moneta.Money;

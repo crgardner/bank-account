@@ -1,4 +1,4 @@
-package com.crg.learn.usecase.account.shared;
+package com.crg.learn.usecase.shared;
 
 import org.javamoney.moneta.Money;
 
