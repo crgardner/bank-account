@@ -51,7 +51,7 @@ class PrepareAccountStatementInteractorTest implements PrepareAccountStatementRe
         account.add(new Entry(Money.of(-50, CURRENCY), july_7_2021));
         when(bank.lookup(accountNumber)).thenReturn(Optional.of(account));
 
-        PrepareAccountStatementRequest request = new PrepareAccountStatementRequest(ACCOUNT_NUMBER);
+        var request = new PrepareAccountStatementRequest(ACCOUNT_NUMBER);
         useCase.execute(request, this);
 
         assertThat(response).isEqualTo(expectedResponse());
