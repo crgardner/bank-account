@@ -1,12 +1,11 @@
 package com.crg.learn.usecase.account.statement;
 
 import com.crg.learn.domain.account.*;
-import com.crg.learn.usecase.concept.UseCase;
 
-public class PrepareAccountStatement implements UseCase<PrepareAccountStatementRequest, PrepareAccountStatementResponder> {
+public class PrepareAccountStatementInteractor implements PrepareAccountStatementUseCase {
     private final Bank bank;
 
-    public PrepareAccountStatement(Bank bank) {
+    public PrepareAccountStatementInteractor(Bank bank) {
         this.bank = bank;
     }
 

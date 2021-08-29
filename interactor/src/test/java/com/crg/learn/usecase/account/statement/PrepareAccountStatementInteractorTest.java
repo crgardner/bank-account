@@ -18,9 +18,9 @@ import static com.natpryce.makeiteasy.MakeItEasy.*;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.*;
 
-@DisplayName("PrepareAccountStatement")
+@DisplayName("PrepareAccountStatementInteractor")
 @ExtendWith(MockitoExtension.class)
-class PrepareAccountStatementTest implements PrepareAccountStatementResponder {
+class PrepareAccountStatementInteractorTest implements PrepareAccountStatementResponder {
     private static final String ACCOUNT_NUMBER = "011234567X";
     private static final String CURRENCY_VALUE = "EUR";
     private static final CurrencyUnit CURRENCY = Monetary.getCurrency(CURRENCY_VALUE);
@@ -39,7 +39,7 @@ class PrepareAccountStatementTest implements PrepareAccountStatementResponder {
     void init() {
         accountNumber = new AccountNumber(ACCOUNT_NUMBER);
         account = make(an(Account, with(number, accountNumber)));
-        useCase = new PrepareAccountStatement(bank);
+        useCase = new PrepareAccountStatementInteractor(bank);
         june_21_2021 = LocalDateTime.of(2021, 6, 21, 10, 0).toInstant(ZoneOffset.UTC);
         july_7_2021 = LocalDateTime.of(2021, 7, 7, 14, 30).toInstant(ZoneOffset.UTC);
     }

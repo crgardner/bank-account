@@ -3,17 +3,16 @@ package com.crg.learn.interactor.account.adjust;
 import com.crg.learn.domain.account.*;
 import com.crg.learn.usecase.account.adjust.*;
 import com.crg.learn.usecase.account.shared.AccountResponseBuilder;
-import com.crg.learn.usecase.concept.UseCase;
 import org.javamoney.moneta.Money;
 
 import javax.money.Monetary;
 import java.util.Optional;
 
-class AdjustAccount implements UseCase<AdjustAccountRequest, AdjustAccountResponder> {
+class AdjustAccountInteractor implements AdjustAccountUseCase {
 
     private final Bank bank;
 
-    public AdjustAccount(Bank bank) {
+    public AdjustAccountInteractor(Bank bank) {
         this.bank = bank;
     }
 

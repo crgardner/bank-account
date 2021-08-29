@@ -3,12 +3,11 @@ package com.crg.learn.usecase.account.open;
 import com.crg.learn.domain.account.*;
 import com.crg.learn.domain.person.Person;
 import com.crg.learn.usecase.account.shared.AccountResponseBuilder;
-import com.crg.learn.usecase.concept.UseCase;
 
-class OpenAccount implements UseCase<OpenAccountRequest, OpenAccountResponder> {
+public class OpenAccountInteractor implements OpenAccountUseCase {
     private final Bank bank;
 
-    OpenAccount(Bank bank) {
+    public OpenAccountInteractor(Bank bank) {
         this.bank = bank;
     }
 

@@ -16,9 +16,9 @@ import static com.crg.learn.domain.testsupport.AccountMaker.*;
 import static com.natpryce.makeiteasy.MakeItEasy.*;
 import static org.mockito.Mockito.*;
 
-@DisplayName("OpenAccount")
+@DisplayName("OpenAccountInteractor")
 @ExtendWith(MockitoExtension.class)
-class OpenAccountTest implements OpenAccountResponder {
+class OpenAccountInteractorTest implements OpenAccountResponder {
     private static final String ACCOUNT_NUMBER = "011234567X";
 
     private AccountResponse response;
@@ -30,7 +30,7 @@ class OpenAccountTest implements OpenAccountResponder {
     @DisplayName("creates an account")
     void createsAccount() {
         var request = new OpenAccountRequest("Ford", "Prefect");
-        var useCase = new OpenAccount(bank);
+        var useCase = new OpenAccountInteractor(bank);
 
         useCase.execute(request, this);
 

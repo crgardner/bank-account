@@ -19,9 +19,9 @@ import static com.crg.learn.domain.testsupport.AccountMaker.*;
 import static com.natpryce.makeiteasy.MakeItEasy.*;
 import static org.mockito.Mockito.*;
 
-@DisplayName("AdjustAccount")
+@DisplayName("AdjustAccountInteractor")
 @ExtendWith(MockitoExtension.class)
-class AdjustAccountTest implements AdjustAccountResponder {
+class AdjustAccountInteractorTest implements AdjustAccountResponder {
     private static final String ACCOUNT_NUMBER = "011234567X";
     private static final String CURRENCY_VALUE = "EUR";
     private static final CurrencyUnit CURRENCY = Monetary.getCurrency(CURRENCY_VALUE);
@@ -39,7 +39,7 @@ class AdjustAccountTest implements AdjustAccountResponder {
     void init() {
         accountNumber = new AccountNumber(ACCOUNT_NUMBER);
         account = make(an(Account, with(number, accountNumber)));
-        useCase = new AdjustAccount(bank);
+        useCase = new AdjustAccountInteractor(bank);
     }
 
     @Test

@@ -20,6 +20,7 @@
         <module>domain</module>
         <module>usecase</module>
         <module>application</module>
+        <module>controller</module>
     </modules>
 
     <properties>
@@ -31,6 +32,7 @@
         <mockitoVersion>3.11.2</mockitoVersion>
         <assertJVersion>3.20.2</assertJVersion>
         <makeItEasyVersion>4.0.1</makeItEasyVersion>
+        <jsonUnitAssertJVersion>2.28.0</jsonUnitAssertJVersion>
     </properties>
 
     <dependencyManagement>
