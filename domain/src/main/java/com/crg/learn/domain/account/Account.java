@@ -44,7 +44,7 @@ public class Account {
     }
 
     public AccountStatement createStatement() {
-        return new AccountStatement(accountNumber, accountHolder, entries.createStatement(DEFAULT_CURRENCY));
+        return new AccountStatement(accountNumber, accountHolder, entries.createStatementLines(DEFAULT_CURRENCY));
     }
 
     @Override

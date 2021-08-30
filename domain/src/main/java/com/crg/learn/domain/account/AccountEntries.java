@@ -13,20 +13,21 @@ class AccountEntries {
         entries.add(entry);
     }
 
-    AccountStatementLines createStatement(CurrencyUnit currency) {
+    AccountStatementLines createStatementLines(CurrencyUnit currency) {
         var runningBalance = new MonetaryRunningBalance(currency);
-        var lines = entries.stream().map(entry -> accountStatementLine(entry, runningBalance))
-                                    .collect(Collectors.toList());
-        return new AccountStatementLines(lines);
+
+        return new AccountStatementLines(entryLines(runningBalance));
     }
 
-    private AccountStatementLine accountStatementLine(Entry entry, MonetaryRunningBalance runningBalance) {
-        return entry.createStatementLine(runningBalance);
+    private List<AccountStatementLine> entryLines(MonetaryRunningBalance runningBalance) {
+        return entries.stream().map(entry -> entry.createStatementLine(runningBalance))
+                               .collect(Collectors.toList());
     }
 
     Money computeBalance(CurrencyUnit currency) {
         var runningBalance = new MonetaryRunningBalance(currency);
         entries.forEach(entry -> entry.adjust(runningBalance));
+
         return runningBalance.current();
     }
 }
