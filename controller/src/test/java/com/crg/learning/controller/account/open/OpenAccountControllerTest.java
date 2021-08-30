@@ -7,10 +7,12 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.format.number.money.MonetaryAmountFormatter;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.money.Monetary;
+import java.util.Locale;
 import java.util.function.BiConsumer;
 
 import static com.crg.learning.controller.test.support.UseCaseMocking.*;
@@ -68,6 +70,5 @@ class OpenAccountControllerTest {
                 responder.accept(new AccountResponse("123", "Ford",
                         "Prefect", Money.zero(Monetary.getCurrency("EUR"))));
     }
-
 
 }

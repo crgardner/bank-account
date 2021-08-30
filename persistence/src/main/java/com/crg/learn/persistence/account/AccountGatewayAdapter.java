@@ -19,9 +19,9 @@ public class AccountGatewayAdapter implements Bank {
     @Override
     public void update(Account account) {
         var mapper = new PersistentAccountMapper(account);
-        var accountEntity = mapper.map();
+        var persistentAccount = mapper.map();
 
-        repository.save(accountEntity);
+        repository.save(persistentAccount);
     }
 
     @Override

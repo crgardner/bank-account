@@ -29,10 +29,10 @@ public class OpenAccountInteractor implements OpenAccountUseCase {
     }
 
     private void respond(OpenAccountResponder responder, Account account) {
-        var builder = new AccountResponseBuilder();
+        var exporter = new AccountResponseBuilder();
 
-        account.export(builder);
-        responder.accept(builder.build());
+        account.export(exporter);
+        responder.accept(exporter.build());
     }
 
 }
