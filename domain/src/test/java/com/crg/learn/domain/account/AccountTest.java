@@ -97,6 +97,7 @@ class AccountTest {
     @DisplayName("supports creation via import")
     void supportsCreationViaImport() {
         account = new Account(importer());
+        account.add(new Entry(amountInDefaultCurrency(100)));
         var exporter = new AccountTestExporter();
 
         account.export(exporter);

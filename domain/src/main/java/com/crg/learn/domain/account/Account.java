@@ -12,7 +12,6 @@ public class Account {
     private final AccountNumber accountNumber;
     private final Person accountHolder;
     private final AccountEntries entries = new AccountEntries();
-    private Money balance = Money.of(0, DEFAULT_CURRENCY);
 
     public Account(AccountNumber accountNumber, Person accountHolder) {
         this.accountNumber = accountNumber;
@@ -21,20 +20,22 @@ public class Account {
 
     public Account(AccountImporter importer) {
         this(importer.accountNumber(), importer.accountHolder());
-        this.balance = importer.accountBalance();
     }
 
     public void add(Entry entry) {
-        balance = entry.adjust(balance);
         entries.add(entry);
     }
 
     public boolean hasBalanceOf(Money amount) {
-        return balance.equals(amount);
+        return currentBalance().equals(amount);
+    }
+
+    private Money currentBalance() {
+        return entries.computeBalance(DEFAULT_CURRENCY);
     }
 
     public void export(AccountExporter exporter) {
-        exporter.balance(balance);
+        exporter.balance(currentBalance());
         accountNumber.writeTo(exporter::accountNumber);
         accountHolder.writeTo((first, last) -> {
             exporter.ownerFirstName(first);
@@ -51,6 +52,7 @@ public class Account {
         if (this == o) {
             return true;
         }
+        
         if (!(o instanceof Account account)) {
             return false;
         }

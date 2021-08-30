@@ -16,4 +16,8 @@ public class MonetaryRunningBalance {
 
         return balance;
     }
+
+    public Money current() {
+        return balance;
+    }
 }

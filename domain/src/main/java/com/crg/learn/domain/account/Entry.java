@@ -17,11 +17,13 @@ public class Entry {
         this.whenBooked = whenBooked;
     }
 
-    public Money adjust(Money balance) {
-        return balance.add(amount);
+    public void adjust(MonetaryRunningBalance runningBalance) {
+        runningBalance.adjust(amount);
     }
 
     public AccountStatementLine createStatementLine(MonetaryRunningBalance runningBalance) {
         return new AccountStatementLine(amount, whenBooked, runningBalance.adjust(amount));
     }
+
+
 }
