@@ -13,7 +13,8 @@ public class AccountEntries {
 
     public AccountStatementLines createStatement(CurrencyUnit currency) {
         var runningBalance = new MonetaryRunningBalance(currency);
-        var lines = entries.stream().map(entry -> accountStatementLine(entry, runningBalance)).collect(Collectors.toList());
+        var lines = entries.stream().map(entry -> accountStatementLine(entry, runningBalance))
+                                                 .collect(Collectors.toList());
         return new AccountStatementLines(lines);
     }
 

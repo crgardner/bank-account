@@ -93,6 +93,40 @@ class AccountTest {
         assertThat(statement).usingRecursiveComparison().isEqualTo(expectedStatement());
     }
 
+    @Test
+    @DisplayName("supports creation via import")
+    void supportsCreationViaImport() {
+        account = new Account(importer());
+        var exporter = new AccountTestExporter();
+
+        account.export(exporter);
+
+        assertThat(exporter.accountNumber).isEqualTo("123");
+        assertThat(exporter.balance).isEqualTo(amountInDefaultCurrency(100));
+        assertThat(exporter.ownerFirstName).isEqualTo("Zippy");
+        assertThat(exporter.ownerLastName).isEqualTo("Foo");
+    }
+
+    private AccountImporter importer() {
+        var importer = new AccountImporter() {
+
+            @Override
+            public AccountNumber accountNumber() {
+                return new AccountNumber("123");
+            }
+
+            @Override
+            public Money accountBalance() {
+                return amountInDefaultCurrency(100);
+            }
+
+            public Person accountHolder() {
+                return new Person("Zippy", "Foo");
+            }
+        };
+        return importer;
+    }
+
     private AccountStatement expectedStatement() {
         var lines = List.of(
             new AccountStatementLine(amountInDefaultCurrency(100), jun_21_2021(), amountInDefaultCurrency(100)),
@@ -105,6 +139,34 @@ class AccountTest {
 
     private Money amountInDefaultCurrency(Number amount) {
         return Money.of(amount, DEFAULT_CURRENCY);
+    }
+
+    private static class AccountTestExporter implements AccountExporter {
+
+        private String accountNumber;
+        private String ownerFirstName;
+        private String ownerLastName;
+        private Money balance;
+
+        @Override
+        public void accountNumber(String accountNumber) {
+            this.accountNumber = accountNumber;
+        }
+
+        @Override
+        public void ownerFirstName(String ownerFirstName) {
+            this.ownerFirstName = ownerFirstName;
+        }
+
+        @Override
+        public void ownerLastName(String ownerLastName) {
+            this.ownerLastName = ownerLastName;
+        }
+
+        @Override
+        public void balance(Money balance) {
+            this.balance = balance;
+        }
     }
 
 }

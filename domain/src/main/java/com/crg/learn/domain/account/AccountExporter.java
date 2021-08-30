@@ -2,7 +2,7 @@ package com.crg.learn.domain.account;
 
 import org.javamoney.moneta.Money;
 
-public interface AccountReader {
+public interface AccountExporter {
     void accountNumber(String value);
 
     void ownerFirstName(String value);

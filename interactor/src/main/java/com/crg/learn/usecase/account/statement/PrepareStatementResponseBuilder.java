@@ -1,12 +1,12 @@
 package com.crg.learn.usecase.account.statement;
 
-import com.crg.learn.domain.account.AccountStatementReader;
+import com.crg.learn.domain.account.AccountStatementExporter;
 import org.javamoney.moneta.Money;
 
 import java.time.Instant;
 import java.util.*;
 
-class PrepareStatementResponseBuilder implements AccountStatementReader {
+class PrepareStatementResponseBuilder implements AccountStatementExporter {
     private final List<PrepareStatementResponseLine> lines = new ArrayList<>();
 
     @Override

@@ -29,7 +29,7 @@ public class PrepareAccountStatementInteractor implements PrepareAccountStatemen
 
     private void respond(PrepareAccountStatementResponder responder, AccountStatement statement) {
         var builder = new PrepareStatementResponseBuilder();
-        statement.writeTo(builder);
+        statement.export(builder);
 
         responder.accept(builder.build());
     }

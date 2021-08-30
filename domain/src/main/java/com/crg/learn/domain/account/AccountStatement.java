@@ -13,7 +13,7 @@ public class AccountStatement {
         this.statementLines = statementLines;
     }
 
-    public void writeTo(AccountStatementReader reader) {
-        statementLines.writeTo(reader);
+    public void export(AccountStatementExporter reader) {
+        statementLines.export(reader);
     }
 }

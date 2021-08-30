@@ -4,7 +4,7 @@ import com.crg.learn.domain.account.*;
 import com.crg.learn.usecase.shared.AccountResponse;
 import org.javamoney.moneta.Money;
 
-public class AccountResponseBuilder implements AccountReader {
+public class AccountResponseBuilder implements AccountExporter {
     private String accountNumberValue;
     private String firstNameValue;
     private String lastNameValue;

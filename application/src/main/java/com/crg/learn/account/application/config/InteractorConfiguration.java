@@ -14,25 +14,4 @@ public class InteractorConfiguration {
         return new OpenAccountInteractor(bank);
     }
 
-    @Bean
-    Bank bank() {
-        return new Bank() {
-            private final List<Account> accounts = new ArrayList<>();
-
-            @Override
-            public void open(Account account) {
-                accounts.add(account);
-            }
-
-            @Override
-            public void update(Account account) {
-                accounts.add(account);
-            }
-
-            @Override
-            public Optional<Account> lookup(AccountNumber accountNumber) {
-                return Optional.of(accounts.get(0));
-            }
-        };
-    }
 }

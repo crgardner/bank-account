@@ -19,6 +19,11 @@ public class Account {
         this.accountHolder = accountHolder;
     }
 
+    public Account(AccountImporter importer) {
+        this(importer.accountNumber(), importer.accountHolder());
+        this.balance = importer.accountBalance();
+    }
+
     public void add(Entry entry) {
         balance = entry.adjust(balance);
         entries.add(entry);
@@ -28,12 +33,12 @@ public class Account {
         return balance.equals(amount);
     }
 
-    public void writeTo(AccountReader reader) {
-        reader.balance(balance);
-        accountNumber.writeTo(reader::accountNumber);
+    public void export(AccountExporter exporter) {
+        exporter.balance(balance);
+        accountNumber.writeTo(exporter::accountNumber);
         accountHolder.writeTo((first, last) -> {
-            reader.ownerFirstName(first);
-            reader.ownerLastName(last);
+            exporter.ownerFirstName(first);
+            exporter.ownerLastName(last);
         });
     }
 

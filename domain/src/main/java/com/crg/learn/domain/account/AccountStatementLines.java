@@ -9,7 +9,7 @@ public class AccountStatementLines {
         this.lines = lines;
     }
 
-    public void writeTo(AccountStatementReader reader) {
-        lines.forEach(line -> line.writeTo(reader));
+    public void export(AccountStatementExporter exporter) {
+        lines.forEach(line -> line.export(exporter));
     }
 }

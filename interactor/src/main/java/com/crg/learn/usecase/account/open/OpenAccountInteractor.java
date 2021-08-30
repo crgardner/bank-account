@@ -31,7 +31,7 @@ public class OpenAccountInteractor implements OpenAccountUseCase {
     private void respond(OpenAccountResponder responder, Account account) {
         var builder = new AccountResponseBuilder();
 
-        account.writeTo(builder);
+        account.export(builder);
         responder.accept(builder.build());
     }
 

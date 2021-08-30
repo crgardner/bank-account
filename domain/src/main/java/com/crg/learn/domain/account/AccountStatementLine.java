@@ -15,7 +15,7 @@ public class AccountStatementLine {
         this.balance = balance;
     }
 
-    public void writeTo(AccountStatementReader reader) {
+    public void export(AccountStatementExporter reader) {
         reader.addLine(whenBooked, amount, balance);
     }
 }

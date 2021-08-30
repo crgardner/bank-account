@@ -4,6 +4,6 @@ import org.javamoney.moneta.Money;
 
 import java.time.Instant;
 
-public interface AccountStatementReader {
+public interface AccountStatementExporter {
     void addLine(Instant whenBooked, Money amount, Money balance);
 }
