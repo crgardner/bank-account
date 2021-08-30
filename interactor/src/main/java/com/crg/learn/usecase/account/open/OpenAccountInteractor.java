@@ -14,14 +14,14 @@ public class OpenAccountInteractor implements OpenAccountUseCase {
     public void execute(OpenAccountRequest request, OpenAccountResponder responder) {
         var account = createAccountFrom(request);
         open(account);
-
         respond(responder, account);
     }
 
     private Account createAccountFrom(OpenAccountRequest request) {
         var accountNumber = new AccountNumber("011234567X");
+        var accountHolder = new Person(request.firstName(), request.lastName());
 
-        return new Account(accountNumber, new Person(request.firstName(), request.lastName()));
+        return new Account(accountNumber, accountHolder);
     }
 
     private void open(Account account) {

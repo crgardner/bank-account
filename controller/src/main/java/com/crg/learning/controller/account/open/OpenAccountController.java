@@ -17,7 +17,9 @@ public class OpenAccountController {
     @PostMapping(value = "/banking/v1/accounts", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> openAccount(@RequestBody AccountOpenResource resource) {
         var presenter = new OpenAccountPresenter();
-        useCase.execute(requestFrom(resource), presenter);
+        var request = requestFrom(resource);
+
+        useCase.execute(request, presenter);
 
         return presenter.responseEntity();
     }
