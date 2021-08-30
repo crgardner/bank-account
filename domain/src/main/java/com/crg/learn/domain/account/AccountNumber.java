@@ -31,6 +31,10 @@ public class AccountNumber {
         return Objects.hash(value);
     }
 
+    public String value() {
+        return value;
+    }
+
     public interface AccountNumberReader {
         void numberValue(String value);
     }

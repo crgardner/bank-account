@@ -26,28 +26,9 @@ public class AccountGatewayAdapter implements Bank {
 
     @Override
     public Optional<Account> lookup(AccountNumber accountNumber) {
-        var value = new AccountNumberValue(accountNumber).value();
-        var possiblePersistentAccount = repository.findByAccountNumber(value);
+        var possiblePersistentAccount = repository.findByAccountNumber(accountNumber.value());
 
         return possiblePersistentAccount.map(persistentAccount -> new Account(new AccountMapper(persistentAccount)));
     }
 
-    private static class AccountNumberValue implements AccountNumber.AccountNumberReader {
-        private final AccountNumber accountNumber;
-        private String value;
-
-        private AccountNumberValue(AccountNumber accountNumber) {
-            this.accountNumber = accountNumber;
-        }
-
-        private String value() {
-            accountNumber.writeTo(this);
-            return value;
-        }
-
-        @Override
-        public void numberValue(String value) {
-            this.value = value;
-        }
-    }
 }

@@ -21,16 +21,20 @@ import static org.mockito.Mockito.*;
 class OpenAccountInteractorTest implements OpenAccountResponder {
     private static final String ACCOUNT_NUMBER = "011234567X";
 
-    private AccountResponse response;
-
     @Mock
     private Bank bank;
+
+    @Mock
+    private AccountNumberProvider accountNumberProvider;
+
+    private AccountResponse response;
 
     @Test
     @DisplayName("creates an account")
     void createsAccount() {
+        when(accountNumberProvider.nextAccountNumber()).thenReturn(new AccountNumber(ACCOUNT_NUMBER));
         var request = new OpenAccountRequest("Ford", "Prefect");
-        var useCase = new OpenAccountInteractor(bank);
+        var useCase = new OpenAccountInteractor(bank, accountNumberProvider);
 
         useCase.execute(request, this);
 
