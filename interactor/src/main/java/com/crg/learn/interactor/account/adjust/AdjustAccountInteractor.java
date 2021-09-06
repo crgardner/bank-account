@@ -10,9 +10,9 @@ import java.util.Optional;
 
 class AdjustAccountInteractor implements AdjustAccountUseCase {
 
-    private final Bank bank;
+    private final AccountRepository bank;
 
-    public AdjustAccountInteractor(Bank bank) {
+    public AdjustAccountInteractor(AccountRepository bank) {
         this.bank = bank;
     }
 

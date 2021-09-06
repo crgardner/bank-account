@@ -5,9 +5,9 @@ import com.crg.learn.domain.account.*;
 import java.util.Optional;
 
 public class PrepareAccountStatementInteractor implements PrepareAccountStatementUseCase {
-    private final Bank bank;
+    private final AccountRepository bank;
 
-    public PrepareAccountStatementInteractor(Bank bank) {
+    public PrepareAccountStatementInteractor(AccountRepository bank) {
         this.bank = bank;
     }
 

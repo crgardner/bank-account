@@ -14,12 +14,12 @@ class AccountEntries {
     }
 
     AccountStatementLines createStatementLines(CurrencyUnit currency) {
-        var runningBalance = new MonetaryRunningBalance(currency);
-
-        return new AccountStatementLines(entryLines(runningBalance));
+        return new AccountStatementLines(entryLines(currency));
     }
 
-    private List<AccountStatementLine> entryLines(MonetaryRunningBalance runningBalance) {
+    private List<AccountStatementLine> entryLines(CurrencyUnit currency) {
+        var runningBalance = new MonetaryRunningBalance(currency);
+
         return entries.stream().map(entry -> entry.createStatementLine(runningBalance))
                                .collect(Collectors.toList());
     }

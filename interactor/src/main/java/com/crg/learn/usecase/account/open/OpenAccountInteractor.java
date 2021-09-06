@@ -5,11 +5,11 @@ import com.crg.learn.domain.person.Person;
 import com.crg.learn.usecase.account.shared.AccountResponseBuilder;
 
 public class OpenAccountInteractor implements OpenAccountUseCase {
-    private final Bank bank;
+    private final AccountRepository accountRepository;
     private final AccountNumberProvider accountNumberProvider;
 
-    public OpenAccountInteractor(Bank bank, AccountNumberProvider accountNumberProvider) {
-        this.bank = bank;
+    public OpenAccountInteractor(AccountRepository accountRepository, AccountNumberProvider accountNumberProvider) {
+        this.accountRepository = accountRepository;
         this.accountNumberProvider = accountNumberProvider;
     }
 
@@ -27,7 +27,7 @@ public class OpenAccountInteractor implements OpenAccountUseCase {
     }
 
     private void open(Account account) {
-        bank.open(account);
+        accountRepository.open(account);
     }
 
     private void respond(OpenAccountResponder responder, Account account) {

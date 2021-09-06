@@ -8,8 +8,8 @@ import org.springframework.context.annotation.*;
 public class InteractorConfiguration {
 
     @Bean
-    OpenAccountUseCase openAccountUseCase(Bank bank) {
-        return new OpenAccountInteractor(bank, new UUIDAccountNumberProvider());
+    OpenAccountUseCase openAccountUseCase(AccountRepository accountRepository) {
+        return new OpenAccountInteractor(accountRepository, new UUIDAccountNumberProvider());
     }
 
 }

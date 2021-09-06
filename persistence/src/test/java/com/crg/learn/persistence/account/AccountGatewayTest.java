@@ -13,20 +13,20 @@ import static com.crg.learn.domain.testsupport.AccountMaker.*;
 import static com.natpryce.makeiteasy.MakeItEasy.*;
 import static org.mockito.Mockito.*;
 
-@DisplayName("AccountGatewayAdapter")
+@DisplayName("AccountGateway")
 @ExtendWith(MockitoExtension.class)
-class AccountGatewayAdapterTest {
+class AccountGatewayTest {
 
     @Mock
     private AccountJpaRepository repository;
 
-    private AccountGatewayAdapter adapter;
+    private AccountGateway adapter;
     private Account account;
     private PersistentAccount persistentAccount;
 
     @BeforeEach
     void init() {
-        adapter = new AccountGatewayAdapter(repository);
+        adapter = new AccountGateway(repository);
         account = make(an(Account));
         persistentAccount = new PersistentAccountMapper(account).map();
     }

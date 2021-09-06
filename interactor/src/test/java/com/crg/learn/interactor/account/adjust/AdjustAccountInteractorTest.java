@@ -27,7 +27,7 @@ class AdjustAccountInteractorTest implements AdjustAccountResponder {
     private static final CurrencyUnit CURRENCY = Monetary.getCurrency(CURRENCY_VALUE);
 
     @Mock
-    private Bank bank;
+    private AccountRepository bank;
 
     private AccountResponse response;
     private AccountNumber accountNumber;

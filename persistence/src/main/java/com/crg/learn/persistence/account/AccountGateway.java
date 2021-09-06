@@ -4,10 +4,10 @@ import com.crg.learn.domain.account.*;
 
 import java.util.Optional;
 
-public class AccountGatewayAdapter implements Bank {
+public class AccountGateway implements AccountRepository {
     private final AccountJpaRepository repository;
 
-    public AccountGatewayAdapter(AccountJpaRepository repository) {
+    public AccountGateway(AccountJpaRepository repository) {
         this.repository = repository;
     }
 
@@ -28,7 +28,11 @@ public class AccountGatewayAdapter implements Bank {
     public Optional<Account> lookup(AccountNumber accountNumber) {
         var possiblePersistentAccount = repository.findByAccountNumber(accountNumber.value());
 
-        return possiblePersistentAccount.map(persistentAccount -> new Account(new AccountMapper(persistentAccount)));
+        return possiblePersistentAccount.map(this::toAccount);
+    }
+
+    private Account toAccount(PersistentAccount persistentAccount) {
+        return new Account(new AccountMapper(persistentAccount));
     }
 
 }

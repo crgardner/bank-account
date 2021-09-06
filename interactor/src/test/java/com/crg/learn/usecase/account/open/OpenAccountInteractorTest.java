@@ -22,7 +22,7 @@ class OpenAccountInteractorTest implements OpenAccountResponder {
     private static final String ACCOUNT_NUMBER = "011234567X";
 
     @Mock
-    private Bank bank;
+    private AccountRepository accountRepository;
 
     @Mock
     private AccountNumberProvider accountNumberProvider;
@@ -34,12 +34,12 @@ class OpenAccountInteractorTest implements OpenAccountResponder {
     void createsAccount() {
         when(accountNumberProvider.nextAccountNumber()).thenReturn(new AccountNumber(ACCOUNT_NUMBER));
         var request = new OpenAccountRequest("Ford", "Prefect");
-        var useCase = new OpenAccountInteractor(bank, accountNumberProvider);
+        var useCase = new OpenAccountInteractor(accountRepository, accountNumberProvider);
 
         useCase.execute(request, this);
 
         assertThat(response).isEqualTo(expectedResponse());
-        verify(bank).open(expectedAccount());
+        verify(accountRepository).open(expectedAccount());
     }
 
     private Account expectedAccount() {

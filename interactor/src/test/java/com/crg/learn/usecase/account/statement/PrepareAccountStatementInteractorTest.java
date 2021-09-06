@@ -26,7 +26,7 @@ class PrepareAccountStatementInteractorTest implements PrepareAccountStatementRe
     private static final CurrencyUnit CURRENCY = Monetary.getCurrency(CURRENCY_VALUE);
 
     @Mock
-    private Bank bank;
+    private AccountRepository bank;
 
     private AccountNumber accountNumber;
     private Account account;
