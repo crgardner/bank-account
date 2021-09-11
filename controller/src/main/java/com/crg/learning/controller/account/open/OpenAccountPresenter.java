@@ -16,7 +16,7 @@ public class OpenAccountPresenter implements OpenAccountResponder {
     }
 
     private URI uriFrom(AccountResponse response) {
-        return URI.create(String.format("/banking/accounts/v1/%s", response.accountNumber()));
+        return URI.create("/banking/accounts/v1/%s".formatted(response.accountNumber()));
     }
 
     private AccountResource accountResourceFrom(AccountResponse response) {

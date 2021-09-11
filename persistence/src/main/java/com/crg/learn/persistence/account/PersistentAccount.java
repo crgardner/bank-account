@@ -63,4 +63,5 @@ public class PersistentAccount {
     public void setBalance(Money balance) {
         this.balance = balance;
     }
+
 }

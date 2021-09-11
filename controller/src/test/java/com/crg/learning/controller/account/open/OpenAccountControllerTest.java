@@ -7,12 +7,10 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.format.number.money.MonetaryAmountFormatter;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.money.Monetary;
-import java.util.Locale;
 import java.util.function.BiConsumer;
 
 import static com.crg.learning.controller.test.support.UseCaseMocking.*;
@@ -25,6 +23,7 @@ class OpenAccountControllerTest {
     private static final String CLIENT_URI = "/banking/v1/accounts";
 
     @Autowired
+    @SuppressWarnings("all")
     private MockMvc mockMvc;
 
     @MockBean
@@ -40,8 +39,23 @@ class OpenAccountControllerTest {
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(openAccountPostBody())
                             .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(201))
-                .andExpect(content().json(expectedAccountResource()));
+               .andExpect(status().is(201))
+               .andExpect(content().json(expectedAccountResource()));
+    }
+
+    private BiConsumer<OpenAccountRequest, OpenAccountResponder> toProvideNewlyOpenedAccount() {
+        return (request, responder) ->
+                responder.accept(new AccountResponse("123", "Ford",
+                        "Prefect", Money.zero(Monetary.getCurrency("EUR"))));
+    }
+
+    private String openAccountPostBody() {
+        return """
+                 {
+                    "firstName": "Ford",
+                    "lastName": "Prefect"
+                 }
+                """;
     }
 
     private String expectedAccountResource() {
@@ -54,21 +68,6 @@ class OpenAccountControllerTest {
                     "currency": "EUR"
                 }
                 """;
-    }
-
-    private String openAccountPostBody() {
-        return """
-                 {
-                    "firstName": "Ford",
-                    "lastName": "Prefect"
-                 }
-                """;
-    }
-
-    private BiConsumer<OpenAccountRequest, OpenAccountResponder> toProvideNewlyOpenedAccount() {
-        return (request, responder) ->
-                responder.accept(new AccountResponse("123", "Ford",
-                        "Prefect", Money.zero(Monetary.getCurrency("EUR"))));
     }
 
 }

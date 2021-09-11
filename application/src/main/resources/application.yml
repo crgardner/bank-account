@@ -1,1 +1,8 @@
-spring.jpa.hibernate.ddl-auto: create-drop
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+    hibernate:
+      ddl-auto: create-drop

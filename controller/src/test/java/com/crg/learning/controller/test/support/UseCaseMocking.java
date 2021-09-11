@@ -13,12 +13,12 @@ public final class UseCaseMocking {
         // default
     }
 
-    public static <I, O> void prepare(UseCase<I, O> useCase, BiConsumer<I, O> performAction) {
+    public static <I, O> void prepare(UseCase<I, O> useCase, BiConsumer<I, O> actionToPerform) {
         doAnswer(useCaseInvocation -> {
             I request = requestFrom(useCaseInvocation);
             O responder = responseFrom(useCaseInvocation);
 
-            performAction.accept(request, responder);
+            actionToPerform.accept(request, responder);
             return null;
         }).when(useCase).execute(any(), any());
     }
