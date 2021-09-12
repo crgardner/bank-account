@@ -34,21 +34,35 @@ class PrepareAccountStatementInteractorTest implements PrepareAccountStatementRe
     private PrepareStatementResponse response;
     private Instant june_21_2021;
     private Instant july_7_2021;
+    private Money oneHundredEuroDeposit;
+    private Money fiftyEuroWithdrawal;
 
     @BeforeEach
     void init() {
-        accountNumber = new AccountNumber(ACCOUNT_NUMBER);
-        account = make(an(Account, with(number, accountNumber)));
-        useCase = new PrepareAccountStatementInteractor(bank);
         june_21_2021 = LocalDateTime.of(2021, 6, 21, 10, 0).toInstant(ZoneOffset.UTC);
         july_7_2021 = LocalDateTime.of(2021, 7, 7, 14, 30).toInstant(ZoneOffset.UTC);
+
+        oneHundredEuroDeposit = Money.of(100, CURRENCY);
+        fiftyEuroWithdrawal = Money.of(-50, CURRENCY);
+
+        accountNumber = new AccountNumber(ACCOUNT_NUMBER);
+        account = make(an(Account, with(number, accountNumber),
+                                   with(entries, listOf(an(Entry, with(whenBooked, june_21_2021),
+                                                                  with(entryAmount, oneHundredEuroDeposit)
+                                                        ),
+                                                        an(Entry, with(whenBooked, july_7_2021),
+                                                                  with(entryAmount, fiftyEuroWithdrawal)
+                                                        )
+                                                )
+                                   )
+                    )
+        );
+        useCase = new PrepareAccountStatementInteractor(bank);
     }
 
     @Test
     @DisplayName("prepares statement for account")
     void preparesStatementForAccount() {
-        account.add(new Entry(Money.of(100, CURRENCY), june_21_2021));
-        account.add(new Entry(Money.of(-50, CURRENCY), july_7_2021));
         when(bank.lookup(accountNumber)).thenReturn(Optional.of(account));
 
         var request = new PrepareAccountStatementRequest(ACCOUNT_NUMBER);
@@ -61,8 +75,8 @@ class PrepareAccountStatementInteractorTest implements PrepareAccountStatementRe
 
         return new PrepareStatementResponse(
                 List.of(
-                        new PrepareStatementResponseLine(june_21_2021, Money.of(100, CURRENCY), Money.of(100, CURRENCY)),
-                        new PrepareStatementResponseLine(july_7_2021, Money.of(-50, CURRENCY), Money.of(50, CURRENCY))
+                        new PrepareStatementResponseLine(june_21_2021, oneHundredEuroDeposit, Money.of(100, CURRENCY)),
+                        new PrepareStatementResponseLine(july_7_2021, fiftyEuroWithdrawal, Money.of(50, CURRENCY))
                 )
         );
     }

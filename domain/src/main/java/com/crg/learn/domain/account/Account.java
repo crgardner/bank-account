@@ -11,15 +11,20 @@ public class Account {
 
     private final AccountNumber accountNumber;
     private final Person accountHolder;
-    private final AccountEntries entries = new AccountEntries();
+    private final AccountEntries entries;
 
     public Account(AccountNumber accountNumber, Person accountHolder) {
+        this(accountNumber, accountHolder, new AccountEntries());
+    }
+
+    private Account(AccountNumber accountNumber, Person accountHolder, AccountEntries entries) {
         this.accountNumber = accountNumber;
         this.accountHolder = accountHolder;
+        this.entries = entries;
     }
 
     public Account(AccountImporter importer) {
-        this(importer.accountNumber(), importer.accountHolder());
+        this(importer.accountNumber(), importer.accountHolder(), new AccountEntries(importer.entryImporters()));
     }
 
     public void add(Entry entry) {
@@ -36,11 +41,12 @@ public class Account {
 
     public void export(AccountExporter exporter) {
         exporter.balance(currentBalance());
-        accountNumber.writeTo(exporter::accountNumber);
+        exporter.accountNumber(accountNumber.value());
         accountHolder.writeTo((first, last) -> {
             exporter.ownerFirstName(first);
             exporter.ownerLastName(last);
         });
+        entries.export(exporter);
     }
 
     public AccountStatement createStatement() {

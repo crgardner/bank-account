@@ -10,10 +10,6 @@ public class AccountNumber {
         this.value = value;
     }
 
-    public void writeTo(AccountNumberReader reader) {
-        reader.numberValue(value);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -33,10 +29,6 @@ public class AccountNumber {
 
     public String value() {
         return value;
-    }
-
-    public interface AccountNumberReader {
-        void numberValue(String value);
     }
 
 }

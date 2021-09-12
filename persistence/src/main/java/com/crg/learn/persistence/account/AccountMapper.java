@@ -2,7 +2,8 @@ package com.crg.learn.persistence.account;
 
 import com.crg.learn.domain.account.*;
 import com.crg.learn.domain.person.Person;
-import org.javamoney.moneta.Money;
+
+import java.util.*;
 
 public class AccountMapper implements AccountImporter {
     private final PersistentAccount persistentAccount;
@@ -17,13 +18,13 @@ public class AccountMapper implements AccountImporter {
     }
 
     @Override
-    public Money accountBalance() {
-        return persistentAccount.getBalance();
-    }
-
-    @Override
     public Person accountHolder() {
         return new Person(persistentAccount.getHolderFirstName(),
                           persistentAccount.getHolderLastName());
+    }
+
+    @Override
+    public List<EntryImporter> entryImporters() {
+        return Collections.emptyList();
     }
 }

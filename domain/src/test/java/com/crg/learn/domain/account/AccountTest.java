@@ -1,14 +1,16 @@
 package com.crg.learn.domain.account;
 
-import static org.assertj.core.api.Assertions.*;
 import com.crg.learn.domain.person.Person;
+import com.crg.learn.domain.testsupport.TestEntryImporter;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.*;
 
 import javax.money.*;
+import java.time.Instant;
 import java.util.List;
 
 import static com.crg.learn.domain.account.BookingDates.*;
+import static org.assertj.core.api.Assertions.*;
 
 
 @DisplayName("Account")
@@ -97,7 +99,6 @@ class AccountTest {
     @DisplayName("supports creation via import")
     void supportsCreationViaImport() {
         account = new Account(importer());
-        account.add(new Entry(amountInDefaultCurrency(100)));
         var exporter = new AccountTestExporter();
 
         account.export(exporter);
@@ -109,23 +110,21 @@ class AccountTest {
     }
 
     private AccountImporter importer() {
-        var importer = new AccountImporter() {
+        return new AccountImporter() {
 
             @Override
             public AccountNumber accountNumber() {
                 return new AccountNumber("123");
             }
 
-            @Override
-            public Money accountBalance() {
-                return amountInDefaultCurrency(100);
-            }
-
             public Person accountHolder() {
                 return new Person("Zippy", "Foo");
             }
+
+            public List<EntryImporter> entryImporters() {
+                return List.of(new TestEntryImporter(amountInDefaultCurrency(100), jun_21_2021()));
+            }
         };
-        return importer;
     }
 
     private AccountStatement expectedStatement() {
@@ -168,6 +167,12 @@ class AccountTest {
         public void balance(Money balance) {
             this.balance = balance;
         }
+
+        @Override
+        public void addEntry(Instant whenBooked, Money amount) {
+
+        }
+
     }
 
 }

@@ -15,6 +15,7 @@ import javax.money.Monetary;
 class AccountJpaRepositoryTest {
 
     @Autowired
+    @SuppressWarnings("all")
     private AccountJpaRepository repository;
 
     private PersistentAccount account;

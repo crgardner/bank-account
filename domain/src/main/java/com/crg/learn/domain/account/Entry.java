@@ -17,6 +17,10 @@ public class Entry {
         this.whenBooked = whenBooked;
     }
 
+    Entry(EntryImporter importer) {
+        this(importer.amount(), importer.whenBooked());
+    }
+
     public void adjust(MonetaryRunningBalance runningBalance) {
         runningBalance.adjust(amount);
     }
@@ -25,5 +29,7 @@ public class Entry {
         return new AccountStatementLine(amount, whenBooked, runningBalance.adjust(amount));
     }
 
-
+    public void export(AccountExporter exporter) {
+        exporter.addEntry(whenBooked, amount);
+    }
 }

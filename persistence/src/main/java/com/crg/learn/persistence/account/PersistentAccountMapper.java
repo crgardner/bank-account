@@ -3,9 +3,11 @@ package com.crg.learn.persistence.account;
 import com.crg.learn.domain.account.*;
 import org.javamoney.moneta.Money;
 
+import java.time.Instant;
+
 class PersistentAccountMapper implements AccountExporter {
     private final Account account;
-    private final PersistentAccount accountEntity = new PersistentAccount();
+    private final PersistentAccount persistentAccount = new PersistentAccount();
 
     public PersistentAccountMapper(Account account) {
         this.account = account;
@@ -13,26 +15,34 @@ class PersistentAccountMapper implements AccountExporter {
 
     public PersistentAccount map() {
         account.export(this);
-        return accountEntity;
+        return persistentAccount;
     }
 
     @Override
     public void accountNumber(String value) {
-        accountEntity.setAccountNumber(value);
+        persistentAccount.setAccountNumber(value);
     }
 
     @Override
     public void ownerFirstName(String value) {
-        accountEntity.setHolderFirstName(value);
+        persistentAccount.setHolderFirstName(value);
     }
 
     @Override
     public void ownerLastName(String value) {
-        accountEntity.setHolderLastName(value);
+        persistentAccount.setHolderLastName(value);
     }
 
     @Override
     public void balance(Money value) {
-        accountEntity.setBalance(value);
+        persistentAccount.setBalance(value);
+    }
+
+    @Override
+    public void addEntry(Instant whenBooked, Money amount) {
+        var persistentEntry = new PersistentEntry();
+        persistentEntry.setAmount(amount);
+        persistentEntry.setWhenBooked(whenBooked);
+        persistentAccount.add(persistentEntry);
     }
 }

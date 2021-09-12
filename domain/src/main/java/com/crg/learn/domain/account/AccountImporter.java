@@ -1,11 +1,13 @@
 package com.crg.learn.domain.account;
 
 import com.crg.learn.domain.person.Person;
-import org.javamoney.moneta.Money;
+
+import java.util.List;
 
 public interface AccountImporter {
     AccountNumber accountNumber();
-    Money accountBalance();
+
     Person accountHolder();
 
+    List<EntryImporter> entryImporters();
 }

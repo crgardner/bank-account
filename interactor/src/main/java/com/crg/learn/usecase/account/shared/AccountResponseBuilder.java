@@ -4,6 +4,8 @@ import com.crg.learn.domain.account.*;
 import com.crg.learn.usecase.shared.AccountResponse;
 import org.javamoney.moneta.Money;
 
+import java.time.Instant;
+
 public class AccountResponseBuilder implements AccountExporter {
     private String accountNumberValue;
     private String firstNameValue;
@@ -28,6 +30,11 @@ public class AccountResponseBuilder implements AccountExporter {
     @Override
     public void balance(Money balanceValue) {
         this.balanceValue = balanceValue;
+    }
+
+    @Override
+    public void addEntry(Instant whenBooked, Money amount) {
+
     }
 
     public AccountResponse build() {

@@ -3,15 +3,39 @@ package com.crg.learn.domain.testsupport;
 import com.crg.learn.domain.account.*;
 import com.crg.learn.domain.person.Person;
 import com.natpryce.makeiteasy.*;
+import org.javamoney.moneta.Money;
+
+import javax.money.Monetary;
+import java.time.Instant;
+import java.util.Collections;
+
+import static com.natpryce.makeiteasy.Property.*;
 
 public class AccountMaker {
-    public static final Property<Account, Person> accountHolder = Property.newProperty();
-    public static final Property<Account, AccountNumber> number = Property.newProperty();
-    public static final Property<Account, String> numberValue = Property.newProperty();
+    public static final Property<Account, Person> accountHolder = newProperty();
+    public static final Property<Account, AccountNumber> number = newProperty();
+    public static final Property<Account, String> numberValue = newProperty();
 
+    public static final Property<Account, Iterable<Entry>> entries = newProperty();
+    public static final Property<Entry, Money> entryAmount = newProperty();
+    public static final Property<Entry, Instant> whenBooked = newProperty();
 
-    public static final Instantiator<Account> Account = lookup ->
-            new Account(accountNumberFrom(lookup), lookup.valueOf(accountHolder, new Person("Ford", "Prefect")));
+    public static final Instantiator<Entry> Entry = lookup ->
+            new Entry(lookup.valueOf(entryAmount, Money.zero(Monetary.getCurrency("EUR"))),
+                      lookup.valueOf(whenBooked, Instant.now()));
+
+    public static final Instantiator<Account> Account = lookup -> {
+        var account = new Account(accountNumberFrom(lookup), lookup.valueOf(accountHolder, new Person("Ford", "Prefect")));
+        prepareEntries(lookup, account);
+
+        return account;
+    };
+
+    private static void prepareEntries(PropertyLookup<Account> lookup, Account account) {
+        var actualEntries = lookup.valueOf(entries, Collections.emptyList());
+
+        actualEntries.forEach(account::add);
+    }
 
     private static AccountNumber accountNumberFrom(PropertyLookup<Account> lookup) {
         var actualNumberValue = lookup.valueOf(numberValue, "123X99948715");
