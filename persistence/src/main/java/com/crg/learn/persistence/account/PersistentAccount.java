@@ -22,7 +22,11 @@ public class PersistentAccount {
     @Column(name = "holder_last_name")
     private String holderLastName;
 
-    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
+    @ElementCollection
+    @CollectionTable(
+            name = "entry",
+            joinColumns = @JoinColumn(name = "bank_account_id")
+    )
     private List<PersistentEntry> entries = new ArrayList<>();
 
     @Column(name = "balance")
@@ -79,6 +83,5 @@ public class PersistentAccount {
 
     public void add(PersistentEntry entry) {
         entries.add(entry);
-        entry.setBankAccount(this);
     }
 }

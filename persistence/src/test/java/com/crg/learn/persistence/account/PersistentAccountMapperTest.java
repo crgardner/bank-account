@@ -43,16 +43,15 @@ class PersistentAccountMapperTest {
         assertThat(persistentAccount.getHolderFirstName()).isEqualTo(FIRST_NAME);
         assertThat(persistentAccount.getHolderLastName()).isEqualTo(LAST_NAME);
         assertThat(persistentAccount.getEntries()).usingRecursiveComparison()
-                                                  .isEqualTo(expectedEntryWith(persistentAccount));
+                                                  .isEqualTo(expectedEntry());
     }
 
     private Money oneHundredEuros() {
         return Money.of(100, Monetary.getCurrency("EUR"));
     }
 
-    private List<PersistentEntry> expectedEntryWith(PersistentAccount persistentAccount) {
+    private List<PersistentEntry> expectedEntry() {
         var persistentEntry = new PersistentEntry();
-        persistentEntry.setBankAccount(persistentAccount);
         persistentEntry.setAmount(oneHundredEuros());
         persistentEntry.setWhenBooked(now);
 
