@@ -31,10 +31,6 @@ public class Account {
         entries.add(entry);
     }
 
-    public boolean hasBalanceOf(Money amount) {
-        return currentBalance().equals(amount);
-    }
-
     private Money currentBalance() {
         return entries.computeBalance(DEFAULT_CURRENCY);
     }

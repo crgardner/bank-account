@@ -35,7 +35,10 @@ class AccountTest {
         @Test
         @DisplayName("has zero balance")
         void hasZeroBalance() {
-            assertThat(account.hasBalanceOf(Money.zero(DEFAULT_CURRENCY))).isTrue();
+            var exporter = new AccountTestExporter();
+            account.export(exporter);
+
+            assertThat(exporter.balance).isEqualTo(Money.zero(DEFAULT_CURRENCY));
         }
 
         @Nested
@@ -52,7 +55,10 @@ class AccountTest {
             @Test
             @DisplayName("has balance equal to deposit amount after first deposit")
             void hasBalanceEqualToDepositAmount() {
-                assertThat(account.hasBalanceOf(depositAmount)).isTrue();
+                var exporter = new AccountTestExporter();
+                account.export(exporter);
+
+                assertThat(exporter.balance).isEqualTo(depositAmount);
             }
 
             @Test
@@ -61,7 +67,10 @@ class AccountTest {
                 account.add(new Entry(amountInDefaultCurrency(1000)));
                 account.add(new Entry(amountInDefaultCurrency(14.35)));
 
-                assertThat(account.hasBalanceOf(amountInDefaultCurrency(1064.60))).isTrue();
+                var exporter = new AccountTestExporter();
+                account.export(exporter);
+
+                assertThat(exporter.balance).isEqualTo(amountInDefaultCurrency(1064.60));
             }
         }
 
@@ -78,7 +87,10 @@ class AccountTest {
             void hasBalanceEqualToPreviousBalanceMinusWithdrawalAmount() {
                 account.add(new Entry(amountInDefaultCurrency(-100)));
 
-                assertThat(account.hasBalanceOf(amountInDefaultCurrency(964.60))).isTrue();
+                var exporter = new AccountTestExporter();
+                account.export(exporter);
+
+                assertThat(exporter.balance).isEqualTo(amountInDefaultCurrency(964.60));
             }
         }
     }
