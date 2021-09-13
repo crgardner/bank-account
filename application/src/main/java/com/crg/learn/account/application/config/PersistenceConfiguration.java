@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class PersistenceConfiguration {
 
     @Bean
-    AccountRepository accountGatewayAdapter(AccountJpaRepository repository) {
+    AccountRepository accountGateway(AccountJpaRepository repository) {
         return new AccountGateway(repository);
     }
 }

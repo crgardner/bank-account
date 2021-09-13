@@ -6,10 +6,10 @@ import com.crg.learn.usecase.account.statement.*;
 import java.util.Optional;
 
 public class PrepareAccountStatementInteractor implements PrepareAccountStatementUseCase {
-    private final AccountRepository bank;
+    private final AccountRepository accountRepository;
 
-    public PrepareAccountStatementInteractor(AccountRepository bank) {
-        this.bank = bank;
+    public PrepareAccountStatementInteractor(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class PrepareAccountStatementInteractor implements PrepareAccountStatemen
     }
 
     private Optional<Account> lookupAccount(PrepareAccountStatementRequest request) {
-        return bank.lookup(new AccountNumber(request.accountNumber()));
+        return accountRepository.lookup(new AccountNumber(request.accountNumber()));
     }
 
     private AccountStatement createStatementFrom(Account account) {
