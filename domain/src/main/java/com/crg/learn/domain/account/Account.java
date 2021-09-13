@@ -55,11 +55,11 @@ public class Account {
             return true;
         }
         
-        if (!(o instanceof Account account)) {
+        if (!(o instanceof Account other)) {
             return false;
         }
 
-        return accountNumber.equals(account.accountNumber) && accountHolder.equals(account.accountHolder);
+        return accountNumber.equals(other.accountNumber) && accountHolder.equals(other.accountHolder);
     }
 
     @Override

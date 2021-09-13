@@ -10,10 +10,10 @@ import java.util.Optional;
 
 class AdjustAccountInteractor implements AdjustAccountUseCase {
 
-    private final AccountRepository bank;
+    private final AccountRepository accountRepository;
 
-    public AdjustAccountInteractor(AccountRepository bank) {
-        this.bank = bank;
+    public AdjustAccountInteractor(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
     @Override
@@ -30,7 +30,7 @@ class AdjustAccountInteractor implements AdjustAccountUseCase {
     }
 
     private void update(Account account) {
-        bank.update(account);
+        accountRepository.update(account);
     }
 
     private void respond(AdjustAccountResponder responder, Account account) {
@@ -47,6 +47,6 @@ class AdjustAccountInteractor implements AdjustAccountUseCase {
     private Optional<Account> findAccount(AdjustAccountRequest request) {
         var accountNumber = new AccountNumber(request.accountNumber());
 
-        return bank.lookup(accountNumber);
+        return accountRepository.lookup(accountNumber);
     }
 }
