@@ -35,7 +35,7 @@ class PersistentAccountMapper implements AccountExporter {
 
     @Override
     public void balance(Money value) {
-        persistentAccount.setBalance(value);
+        // no-op
     }
 
     @Override
