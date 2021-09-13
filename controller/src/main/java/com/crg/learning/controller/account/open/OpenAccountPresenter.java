@@ -28,7 +28,7 @@ public class OpenAccountPresenter implements OpenAccountResponder {
     }
 
     private String formattedBalance(AccountResponse response) {
-        return String.format("%.2f", response.balance().getNumber().doubleValueExact());
+        return "%.2f".formatted(response.balance().getNumber().doubleValueExact());
     }
 
     public ResponseEntity<Object> responseEntity() {
