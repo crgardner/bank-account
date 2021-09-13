@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 class AccountEntries {
     private final List<Entry> entries;
 
-    public AccountEntries() {
+    AccountEntries() {
         this.entries = new ArrayList<>();
     }
 
-    public AccountEntries(List<EntryImporter> entryImporters) {
+    AccountEntries(List<EntryImporter> entryImporters) {
         this.entries = entryImporters.stream().map(Entry::new).collect(Collectors.toList());
     }
 
@@ -39,7 +39,7 @@ class AccountEntries {
         return runningBalance.current();
     }
 
-    public void export(AccountExporter exporter) {
+    void export(AccountExporter exporter) {
         entries.forEach(entry -> entry.export(exporter));
     }
 }
