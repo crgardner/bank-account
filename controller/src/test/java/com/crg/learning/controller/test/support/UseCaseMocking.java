@@ -16,7 +16,7 @@ public final class UseCaseMocking {
     public static <I, O> void prepare(UseCase<I, O> useCase, BiConsumer<I, O> actionToPerform) {
         doAnswer(useCaseInvocation -> {
             I request = requestFrom(useCaseInvocation);
-            O responder = responseFrom(useCaseInvocation);
+            O responder = responderFrom(useCaseInvocation);
 
             actionToPerform.accept(request, responder);
             return null;
@@ -27,7 +27,7 @@ public final class UseCaseMocking {
         return invocation.getArgument(0);
     }
 
-    private static <O> O responseFrom(InvocationOnMock invocation) {
+    private static <O> O responderFrom(InvocationOnMock invocation) {
         return invocation.getArgument(1);
     }
 }

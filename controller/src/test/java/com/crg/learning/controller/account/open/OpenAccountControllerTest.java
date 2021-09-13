@@ -45,8 +45,7 @@ class OpenAccountControllerTest {
 
     private BiConsumer<OpenAccountRequest, OpenAccountResponder> toProvideNewlyOpenedAccount() {
         return (request, responder) ->
-                responder.accept(new AccountResponse("123", "Ford",
-                        "Prefect", Money.zero(Monetary.getCurrency("EUR"))));
+                responder.accept(new AccountResponse("123", "Ford", "Prefect", Money.zero(Monetary.getCurrency("EUR"))));
     }
 
     private String openAccountPostBody() {
