@@ -1,7 +1,8 @@
-package com.crg.learn.usecase.account.statement;
+package com.crg.learn.interactor.account.statement;
 
 import com.crg.learn.domain.account.Account;
 import com.crg.learn.domain.account.*;
+import com.crg.learn.usecase.account.statement.*;
 import com.crg.learn.usecase.concept.UseCase;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.*;

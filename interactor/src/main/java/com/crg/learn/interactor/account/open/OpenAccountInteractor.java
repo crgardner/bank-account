@@ -1,8 +1,9 @@
-package com.crg.learn.usecase.account.open;
+package com.crg.learn.interactor.account.open;
 
 import com.crg.learn.domain.account.*;
 import com.crg.learn.domain.person.Person;
-import com.crg.learn.usecase.account.shared.AccountResponseBuilder;
+import com.crg.learn.interactor.account.shared.AccountResponseBuilder;
+import com.crg.learn.usecase.account.open.*;
 
 public class OpenAccountInteractor implements OpenAccountUseCase {
     private final AccountRepository accountRepository;

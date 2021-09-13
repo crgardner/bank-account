@@ -1,14 +1,14 @@
 package com.crg.learn.interactor.account.adjust;
 
 import com.crg.learn.domain.account.*;
+import com.crg.learn.interactor.account.shared.AccountResponseBuilder;
 import com.crg.learn.usecase.account.adjust.*;
-import com.crg.learn.usecase.account.shared.AccountResponseBuilder;
 import org.javamoney.moneta.Money;
 
 import javax.money.Monetary;
 import java.util.Optional;
 
-class AdjustAccountInteractor implements AdjustAccountUseCase {
+public class AdjustAccountInteractor implements AdjustAccountUseCase {
 
     private final AccountRepository accountRepository;
 

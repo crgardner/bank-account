@@ -1,6 +1,7 @@
-package com.crg.learn.usecase.account.statement;
+package com.crg.learn.interactor.account.statement;
 
 import com.crg.learn.domain.account.*;
+import com.crg.learn.usecase.account.statement.*;
 
 import java.util.Optional;
 

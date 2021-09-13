@@ -1,8 +1,9 @@
-package com.crg.learn.usecase.account.open;
+package com.crg.learn.interactor.account.open;
 
 import static org.assertj.core.api.Assertions.*;
 import com.crg.learn.domain.account.Account;
 import com.crg.learn.domain.account.*;
+import com.crg.learn.usecase.account.open.*;
 import com.crg.learn.usecase.shared.AccountResponse;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.*;

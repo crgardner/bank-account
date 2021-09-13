@@ -1,4 +1,4 @@
-package com.crg.learn.usecase.account.shared;
+package com.crg.learn.interactor.account.shared;
 
 import com.crg.learn.domain.account.*;
 import com.crg.learn.usecase.shared.AccountResponse;

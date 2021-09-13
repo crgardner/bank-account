@@ -1,6 +1,7 @@
-package com.crg.learn.usecase.account.statement;
+package com.crg.learn.interactor.account.statement;
 
 import com.crg.learn.domain.account.AccountStatementExporter;
+import com.crg.learn.usecase.account.statement.*;
 import org.javamoney.moneta.Money;
 
 import java.time.Instant;
