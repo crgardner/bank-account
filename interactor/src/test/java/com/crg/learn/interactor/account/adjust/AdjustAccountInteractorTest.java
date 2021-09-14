@@ -27,7 +27,7 @@ class AdjustAccountInteractorTest implements AdjustAccountResponder {
     private static final CurrencyUnit CURRENCY = Monetary.getCurrency(CURRENCY_VALUE);
 
     @Mock
-    private AccountRepository bank;
+    private AccountRepository accountRepository;
 
     private AccountResponse response;
     private AccountNumber accountNumber;
@@ -39,36 +39,36 @@ class AdjustAccountInteractorTest implements AdjustAccountResponder {
     void init() {
         accountNumber = new AccountNumber(ACCOUNT_NUMBER);
         account = make(an(Account, with(number, accountNumber)));
-        useCase = new AdjustAccountInteractor(bank);
+        useCase = new AdjustAccountInteractor(accountRepository);
     }
 
     @Test
     @DisplayName("makes deposits to accounts")
     void makesDepositsToAccounts() {
-        when(bank.lookup(accountNumber)).thenReturn(Optional.of(account));
+        when(accountRepository.lookup(accountNumber)).thenReturn(Optional.of(account));
 
         useCase.execute(adjustRequestWithAmount(50.20), this);
 
         assertThat(response).isEqualTo(expectedResponseWithBalance(Money.of(50.20, CURRENCY)));
-        verify(bank).update(account);
+        verify(accountRepository).update(account);
     }
 
     @Test
     @DisplayName("makes withdrawals from accounts")
     void makesWithdrawalsFromAccounts() {
         account.add(new Entry(Money.of(1500, CURRENCY)));
-        when(bank.lookup(accountNumber)).thenReturn(Optional.of(account));
+        when(accountRepository.lookup(accountNumber)).thenReturn(Optional.of(account));
 
         useCase.execute(adjustRequestWithAmount(-100), this);
 
         assertThat(response).isEqualTo(expectedResponseWithBalance(Money.of(1400, CURRENCY)));
-        verify(bank).update(account);
+        verify(accountRepository).update(account);
     }
 
     @Test
     @DisplayName("reports account not found when no matching account number")
     void reportsAccountNotFoundWhenNoMatchingAccountNumber() {
-        when(bank.lookup(accountNumber)).thenReturn(Optional.empty());
+        when(accountRepository.lookup(accountNumber)).thenReturn(Optional.empty());
 
         useCase.execute(adjustRequestWithAmount(100), this);
 
@@ -90,8 +90,7 @@ class AdjustAccountInteractorTest implements AdjustAccountResponder {
     }
 
     private AccountResponse expectedResponseWithBalance(Money accountBalance) {
-        return new AccountResponse(ACCOUNT_NUMBER, "Ford", "Prefect",
-                accountBalance);
+        return new AccountResponse(ACCOUNT_NUMBER, "Ford", "Prefect", accountBalance);
     }
 
 }

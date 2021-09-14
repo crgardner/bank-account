@@ -27,12 +27,13 @@ class PrepareAccountStatementInteractorTest implements PrepareAccountStatementRe
     private static final CurrencyUnit CURRENCY = Monetary.getCurrency(CURRENCY_VALUE);
 
     @Mock
-    private AccountRepository bank;
+    private AccountRepository accountRepository;
 
     private AccountNumber accountNumber;
     private Account account;
     private UseCase<PrepareAccountStatementRequest, PrepareAccountStatementResponder> useCase;
     private PrepareStatementResponse response;
+    private boolean accountNotFound;
     private Instant june_21_2021;
     private Instant july_7_2021;
     private Money oneHundredEuroDeposit;
@@ -58,15 +59,15 @@ class PrepareAccountStatementInteractorTest implements PrepareAccountStatementRe
                                    )
                     )
         );
-        useCase = new PrepareAccountStatementInteractor(bank);
+        useCase = new PrepareAccountStatementInteractor(accountRepository);
     }
 
     @Test
     @DisplayName("prepares statement for account")
     void preparesStatementForAccount() {
-        when(bank.lookup(accountNumber)).thenReturn(Optional.of(account));
-
+        when(accountRepository.lookup(accountNumber)).thenReturn(Optional.of(account));
         var request = new PrepareAccountStatementRequest(ACCOUNT_NUMBER);
+
         useCase.execute(request, this);
 
         assertThat(response).isEqualTo(expectedResponse());
@@ -82,8 +83,24 @@ class PrepareAccountStatementInteractorTest implements PrepareAccountStatementRe
         );
     }
 
+    @Test
+    @DisplayName("reports account not found when no matching account number")
+    void reportsAccountNotFoundWhenNoMatchingAccountNumber() {
+        when(accountRepository.lookup(accountNumber)).thenReturn(Optional.empty());
+        var request = new PrepareAccountStatementRequest(ACCOUNT_NUMBER);
+
+        useCase.execute(request, this);
+
+        assertThat(accountNotFound).isTrue();
+    }
+
     @Override
     public void accept(PrepareStatementResponse response) {
         this.response = response;
+    }
+
+    @Override
+    public void onNotFound() {
+        accountNotFound = true;
     }
 }
