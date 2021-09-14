@@ -23,10 +23,20 @@ public class AdjustAccountInteractor implements AdjustAccountUseCase {
         possibleAccount.ifPresentOrElse(account -> handle(account, request, responder), responder::onNotFound);
     }
 
+    private Optional<Account> findAccount(AdjustAccountRequest request) {
+        var accountNumber = new AccountNumber(request.accountNumber());
+
+        return accountRepository.lookup(accountNumber);
+    }
+
     private void handle(Account account, AdjustAccountRequest request, AdjustAccountResponder responder) {
         adjust(request, account);
         update(account);
         respond(responder, account);
+    }
+
+    private void adjust(AdjustAccountRequest request, Account account) {
+        account.add(new Entry(Money.of(request.amount(), Monetary.getCurrency(request.currency()))));
     }
 
     private void update(Account account) {
@@ -40,13 +50,4 @@ public class AdjustAccountInteractor implements AdjustAccountUseCase {
         responder.accept(builder.build());
     }
 
-    private void adjust(AdjustAccountRequest request, Account account) {
-        account.add(new Entry(Money.of(request.amount(), Monetary.getCurrency(request.currency()))));
-    }
-
-    private Optional<Account> findAccount(AdjustAccountRequest request) {
-        var accountNumber = new AccountNumber(request.accountNumber());
-
-        return accountRepository.lookup(accountNumber);
-    }
 }

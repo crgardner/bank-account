@@ -14,20 +14,19 @@ public class PrepareAccountStatementInteractor implements PrepareAccountStatemen
 
     @Override
     public void execute(PrepareAccountStatementRequest request, PrepareAccountStatementResponder responder) {
-        var possibleAccount = lookupAccount(request);
+        var possibleAccount = findAccount(request);
 
-        possibleAccount.ifPresentOrElse(account -> handle(account, responder),
-                                        responder::onNotFound);
+        possibleAccount.ifPresentOrElse(account -> handle(account, responder), responder::onNotFound);
+    }
+
+    private Optional<Account> findAccount(PrepareAccountStatementRequest request) {
+        return accountRepository.lookup(new AccountNumber(request.accountNumber()));
     }
 
     private void handle(Account account, PrepareAccountStatementResponder responder) {
         var statement = createStatementFrom(account);
 
         respond(responder, statement);
-    }
-
-    private Optional<Account> lookupAccount(PrepareAccountStatementRequest request) {
-        return accountRepository.lookup(new AccountNumber(request.accountNumber()));
     }
 
     private AccountStatement createStatementFrom(Account account) {
