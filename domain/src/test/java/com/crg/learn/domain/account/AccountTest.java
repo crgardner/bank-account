@@ -180,11 +180,6 @@ class AccountTest {
             this.balance = balance;
         }
 
-        @Override
-        public void addEntry(Instant whenBooked, Money amount) {
-
-        }
-
     }
 
 }

@@ -13,5 +13,7 @@ public interface AccountExporter {
 
     void balance(Money value);
 
-    void addEntry(Instant whenBooked, Money amount);
+    default void addEntry(Instant whenBooked, Money amount) {
+        // no-op
+    }
 }
