@@ -1,5 +1,6 @@
 package com.crg.learn.domain.account;
 
+import com.crg.learn.domain.money.MonetaryRunningBalance;
 import org.javamoney.moneta.Money;
 
 import javax.money.CurrencyUnit;
