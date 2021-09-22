@@ -2,7 +2,7 @@ package com.crg.learning.controller.account.adjust;
 
 import com.crg.learn.usecase.account.adjust.AdjustAccountResponder;
 import com.crg.learn.usecase.shared.AccountResponse;
-import com.crg.learning.controller.account.open.AccountResourceMapper;
+import com.crg.learning.controller.account.shared.AccountResourceMapper;
 import org.springframework.http.ResponseEntity;
 
 public class AdjustAccountPresenter implements AdjustAccountResponder {

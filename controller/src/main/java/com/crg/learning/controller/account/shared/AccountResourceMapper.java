@@ -1,4 +1,4 @@
-package com.crg.learning.controller.account.open;
+package com.crg.learning.controller.account.shared;
 
 import com.crg.learn.usecase.shared.AccountResponse;
 

@@ -2,6 +2,7 @@ package com.crg.learning.controller.account.open;
 
 import com.crg.learn.usecase.account.open.OpenAccountResponder;
 import com.crg.learn.usecase.shared.AccountResponse;
+import com.crg.learning.controller.account.shared.*;
 import org.springframework.http.ResponseEntity;
 
 import java.net.URI;
