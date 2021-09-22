@@ -2,8 +2,11 @@ package com.crg.learn.persistence.account;
 
 import com.crg.learn.domain.account.*;
 import com.crg.learn.domain.person.Person;
+import org.javamoney.moneta.Money;
 
+import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AccountMapper implements AccountImporter {
     private final PersistentAccount persistentAccount;
@@ -25,6 +28,14 @@ public class AccountMapper implements AccountImporter {
 
     @Override
     public List<EntryImporter> entryImporters() {
-        return Collections.emptyList();
+        return persistentAccount.getEntries().stream().map(this::toEntryImporter).collect(Collectors.toList());
+    }
+
+    private EntryImporter toEntryImporter(PersistentEntry persistentEntry) {
+        return new EntryMapper(persistentEntry.getAmount(), persistentEntry.getWhenBooked());
+    }
+
+    private static record EntryMapper(Money amount, Instant whenBooked) implements EntryImporter {
+
     }
 }

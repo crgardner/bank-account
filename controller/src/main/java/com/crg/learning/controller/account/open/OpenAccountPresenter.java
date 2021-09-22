@@ -8,11 +8,13 @@ import java.net.URI;
 
 public class OpenAccountPresenter implements OpenAccountResponder {
 
+    private final AccountResourceMapper accountResourceMapper = new AccountResourceMapper();
     private ResponseEntity<Object> entity;
 
     @Override
     public void accept(AccountResponse response) {
-        entity = ResponseEntity.created(uriFrom(response)).body(accountResourceFrom(response));
+        entity = ResponseEntity.created(uriFrom(response))
+                               .body(accountResourceFrom(response));
     }
 
     private URI uriFrom(AccountResponse response) {
@@ -20,15 +22,7 @@ public class OpenAccountPresenter implements OpenAccountResponder {
     }
 
     private AccountResource accountResourceFrom(AccountResponse response) {
-        return new AccountResource(response.accountNumber(),
-                                   response.ownerFirstName(),
-                                   response.ownerLastName(),
-                                   formattedBalance(response),
-                                   response.balance().getCurrency().getCurrencyCode());
-    }
-
-    private String formattedBalance(AccountResponse response) {
-        return "%.2f".formatted(response.balance().getNumber().doubleValueExact());
+        return accountResourceMapper.accountResourceFrom(response);
     }
 
     public ResponseEntity<Object> responseEntity() {

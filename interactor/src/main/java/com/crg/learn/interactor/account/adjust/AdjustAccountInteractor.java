@@ -36,7 +36,10 @@ public class AdjustAccountInteractor implements AdjustAccountUseCase {
     }
 
     private void adjust(AdjustAccountRequest request, Account account) {
-        account.add(new Entry(Money.of(request.amount(), Monetary.getCurrency(request.currency()))));
+        var amount = Money.of(request.amount(), Monetary.getCurrency(request.currency()));
+        var entry = new Entry(amount);
+
+        account.add(entry);
     }
 
     private void update(Account account) {
