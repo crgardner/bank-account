@@ -7,5 +7,6 @@ public interface AdjustAccountResponder {
     void accept(AccountResponse response);
 
     void onNotFound();
+
 }
 

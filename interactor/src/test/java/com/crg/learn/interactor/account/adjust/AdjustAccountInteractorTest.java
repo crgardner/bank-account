@@ -5,15 +5,17 @@ import com.crg.learn.domain.account.Account;
 import com.crg.learn.domain.account.*;
 import com.crg.learn.usecase.account.adjust.*;
 import com.crg.learn.usecase.concept.UseCase;
-import com.crg.learn.usecase.shared.AccountResponse;
+import com.crg.learn.usecase.shared.*;
 import org.javamoney.moneta.Money;
+import org.javamoney.moneta.spi.MoneyUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.money.*;
-import java.util.Optional;
+import java.time.Instant;
+import java.util.*;
 
 import static com.crg.learn.domain.testsupport.AccountMaker.*;
 import static com.natpryce.makeiteasy.MakeItEasy.*;
@@ -49,10 +51,13 @@ class AdjustAccountInteractorTest implements AdjustAccountResponder {
     @DisplayName("makes deposits to accounts")
     void makesDepositsToAccounts() {
         when(accountRepository.lookup(accountNumber)).thenReturn(Optional.of(account));
+        when(transactionIdProvider.nextTransactionId()).thenReturn(new TransactionId("abc"));
 
         useCase.execute(adjustRequestWithAmount(50.20), this);
 
-        assertThat(response).isEqualTo(expectedResponseWithBalance(Money.of(50.20, CURRENCY)));
+        assertThat(response).usingRecursiveComparison()
+                            .ignoringFieldsOfTypes(Instant.class)
+                            .isEqualTo(expectedResponseWithBalance(Money.of(50.20, CURRENCY), Money.of(50.20, CURRENCY)));
         verify(accountRepository).update(account);
     }
 
@@ -66,7 +71,10 @@ class AdjustAccountInteractorTest implements AdjustAccountResponder {
 
         useCase.execute(adjustRequestWithAmount(-100), this);
 
-        assertThat(response).isEqualTo(expectedResponseWithBalance(Money.of(1400, CURRENCY)));
+        assertThat(response).usingRecursiveComparison()
+                            .ignoringFieldsOfTypes(Instant.class)
+                            .isEqualTo(expectedResponseWithBalance(Money.of(1400, CURRENCY),
+                                                                   Money.of(MoneyUtils.getBigDecimal(-100d), CURRENCY)));
         verify(accountRepository).update(account);
     }
 
@@ -94,8 +102,9 @@ class AdjustAccountInteractorTest implements AdjustAccountResponder {
         return new AdjustAccountRequest(ACCOUNT_NUMBER, adjustmentAmount, CURRENCY_VALUE);
     }
 
-    private AccountResponse expectedResponseWithBalance(Money accountBalance) {
-        return new AccountResponse(ACCOUNT_NUMBER, "Ford", "Prefect", accountBalance);
+    private AccountResponse expectedResponseWithBalance(Money accountBalance, Money entryAmount) {
+        return new AccountResponse(ACCOUNT_NUMBER, "Ford", "Prefect", accountBalance,
+                                    Collections.singletonList(new EntryResponse("abc", Instant.now(), entryAmount)));
     }
 
 }

@@ -113,12 +113,13 @@ class AccountTest {
         account = new Account(importer());
         var exporter = new AccountTestExporter();
 
-        account.export(exporter);
+        account.export(EntrySelectionRange.ALL, exporter);
 
         assertThat(exporter.accountNumber).isEqualTo("123");
         assertThat(exporter.balance).isEqualTo(amountInDefaultCurrency(100));
         assertThat(exporter.ownerFirstName).isEqualTo("Zippy");
         assertThat(exporter.ownerLastName).isEqualTo("Foo");
+        assertThat(exporter.entries).containsOnly(new EntryTestExporter("999", jun_21_2021(), amountInDefaultCurrency(100)));
     }
 
     private AccountImporter importer() {
@@ -134,7 +135,7 @@ class AccountTest {
             }
 
             public List<EntryImporter> entryImporters() {
-                return List.of(new TestEntryImporter(null, amountInDefaultCurrency(100), jun_21_2021()));
+                return List.of(new TestEntryImporter(new TransactionId("999"), amountInDefaultCurrency(100), jun_21_2021()));
             }
         };
     }
@@ -159,6 +160,7 @@ class AccountTest {
         private String ownerFirstName;
         private String ownerLastName;
         private Money balance;
+        private List<EntryTestExporter> entries = new ArrayList<>();
 
         @Override
         public void accountNumber(String accountNumber) {
@@ -180,6 +182,10 @@ class AccountTest {
             this.balance = balance;
         }
 
+        @Override
+        public void addEntry(String transactionId, Instant whenBooked, Money amount) {
+            entries.add(new EntryTestExporter(transactionId, whenBooked, amount));
+        }
     }
 
     private TransactionId transactionId() {

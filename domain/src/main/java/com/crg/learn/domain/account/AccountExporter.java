@@ -5,15 +5,15 @@ import org.javamoney.moneta.Money;
 import java.time.Instant;
 
 public interface AccountExporter {
-    void accountNumber(String value);
+    void accountNumber(String accountNumber);
 
-    void ownerFirstName(String value);
+    void ownerFirstName(String ownerFirstName);
 
-    void ownerLastName(String value);
+    void ownerLastName(String ownerLastName);
 
-    void balance(Money value);
+    void balance(Money balance);
 
-    default void addEntry(TransactionId transactionId, Instant whenBooked, Money amount) {
+    default void addEntry(String transactionId, Instant whenBooked, Money amount) {
         // no-op
     }
 }

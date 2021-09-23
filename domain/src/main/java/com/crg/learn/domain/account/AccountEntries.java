@@ -40,7 +40,7 @@ class AccountEntries {
         return runningBalance.current();
     }
 
-    void export(AccountExporter exporter) {
-        entries.forEach(entry -> entry.export(exporter));
+    void export(EntrySelectionRange range, AccountExporter exporter) {
+        range.select(entries).forEach(entry -> entry.export(exporter));
     }
 }

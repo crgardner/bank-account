@@ -8,7 +8,7 @@ import java.time.Instant;
 public class Entry {
     private final Money amount;
     private final Instant whenBooked;
-    private TransactionId transactionId;
+    private final TransactionId transactionId;
 
     public Entry(TransactionId transactionId, Money amount, Instant whenBooked) {
         this.transactionId = transactionId;
@@ -24,7 +24,6 @@ public class Entry {
         this(importer.transactionId(), importer.amount(), importer.whenBooked());
     }
 
-
     public void adjust(MonetaryRunningBalance runningBalance) {
         runningBalance.adjust(amount);
     }
@@ -34,6 +33,6 @@ public class Entry {
     }
 
     public void export(AccountExporter exporter) {
-        exporter.addEntry(transactionId, whenBooked, amount);
+        exporter.addEntry(transactionId.value(), whenBooked, amount);
     }
 }

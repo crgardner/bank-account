@@ -36,13 +36,17 @@ public class Account {
     }
 
     public void export(AccountExporter exporter) {
+        export(EntrySelectionRange.ALL, exporter);
+    }
+
+    public void export(EntrySelectionRange range, AccountExporter exporter) {
         exporter.balance(currentBalance());
         exporter.accountNumber(accountNumber.value());
         accountHolder.writeTo((first, last) -> {
             exporter.ownerFirstName(first);
             exporter.ownerLastName(last);
         });
-        entries.export(exporter);
+        entries.export(range, exporter);
     }
 
     public AccountStatement createStatement() {
@@ -66,5 +70,6 @@ public class Account {
     public int hashCode() {
         return Objects.hash(accountNumber, accountHolder);
     }
+
 
 }
