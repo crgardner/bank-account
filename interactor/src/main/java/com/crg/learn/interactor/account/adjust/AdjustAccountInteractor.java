@@ -11,9 +11,11 @@ import java.util.Optional;
 public class AdjustAccountInteractor implements AdjustAccountUseCase {
 
     private final AccountRepository accountRepository;
+    private final TransactionIdProvider transactionIdProvider;
 
-    public AdjustAccountInteractor(AccountRepository accountRepository) {
+    public AdjustAccountInteractor(AccountRepository accountRepository, TransactionIdProvider transactionIdProvider) {
         this.accountRepository = accountRepository;
+        this.transactionIdProvider = transactionIdProvider;
     }
 
     @Override
@@ -36,8 +38,9 @@ public class AdjustAccountInteractor implements AdjustAccountUseCase {
     }
 
     private void adjust(AdjustAccountRequest request, Account account) {
+        var transactionId = transactionIdProvider.nextTransactionId();
         var amount = Money.of(request.amount(), Monetary.getCurrency(request.currency()));
-        var entry = new Entry(amount);
+        var entry = new Entry(transactionId, amount);
 
         account.add(entry);
     }

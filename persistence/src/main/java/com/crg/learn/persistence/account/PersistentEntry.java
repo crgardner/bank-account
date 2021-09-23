@@ -5,7 +5,7 @@ import org.javamoney.moneta.Money;
 import javax.persistence.*;
 import java.time.Instant;
 
-@Embeddable
+@Entity(name = "entry")
 public class PersistentEntry {
     @Column(name = "when_booked")
     private Instant whenBooked;
@@ -13,6 +13,22 @@ public class PersistentEntry {
     @Column(name = "amount")
     @Convert(converter = com.crg.learn.persistence.conversion.MoneyAttributeConverter.class)
     private Money amount;
+
+    @Id
+    @Column(name="transaction_id")
+    private String transactionId;
+
+    @ManyToOne
+    @JoinColumn(name="account_number")
+    private PersistentAccount account;
+
+    public PersistentAccount getAccount() {
+        return account;
+    }
+
+    public void setAccount(PersistentAccount account) {
+        this.account = account;
+    }
 
     public Instant getWhenBooked() {
         return whenBooked;
@@ -30,4 +46,11 @@ public class PersistentEntry {
         this.amount = amount;
     }
 
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
 }

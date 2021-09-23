@@ -17,7 +17,7 @@ public class InteractorConfiguration {
 
     @Bean
     AdjustAccountUseCase adjustAccountUseCase(AccountRepository accountRepository) {
-        return new AdjustAccountInteractor(accountRepository);
+        return new AdjustAccountInteractor(accountRepository, new UUIDTransactionIdProvider());
     }
 
 }

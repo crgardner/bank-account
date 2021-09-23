@@ -29,6 +29,9 @@ class AdjustAccountInteractorTest implements AdjustAccountResponder {
     @Mock
     private AccountRepository accountRepository;
 
+    @Mock
+    private TransactionIdProvider transactionIdProvider;
+
     private AccountResponse response;
     private AccountNumber accountNumber;
     private Account account;
@@ -39,7 +42,7 @@ class AdjustAccountInteractorTest implements AdjustAccountResponder {
     void init() {
         accountNumber = new AccountNumber(ACCOUNT_NUMBER);
         account = make(an(Account, with(number, accountNumber)));
-        useCase = new AdjustAccountInteractor(accountRepository);
+        useCase = new AdjustAccountInteractor(accountRepository, transactionIdProvider);
     }
 
     @Test
@@ -56,8 +59,10 @@ class AdjustAccountInteractorTest implements AdjustAccountResponder {
     @Test
     @DisplayName("makes withdrawals from accounts")
     void makesWithdrawalsFromAccounts() {
-        account.add(new Entry(Money.of(1500, CURRENCY)));
+        var entry = make(an(Entry, with(entryAmount, Money.of(1500, CURRENCY))));
+        account.add(entry);
         when(accountRepository.lookup(accountNumber)).thenReturn(Optional.of(account));
+        when(transactionIdProvider.nextTransactionId()).thenReturn(new TransactionId("abc"));
 
         useCase.execute(adjustRequestWithAmount(-100), this);
 

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 
 import javax.money.*;
 import java.time.Instant;
-import java.util.List;
+import java.util.*;
 
 import static com.crg.learn.domain.account.BookingDates.*;
 import static org.assertj.core.api.Assertions.*;
@@ -49,7 +49,7 @@ class AccountTest {
             @BeforeEach
             void init() {
                 depositAmount = amountInDefaultCurrency(50.25);
-                account.add(new Entry(depositAmount));
+                account.add(new Entry(transactionId(), depositAmount));
             }
 
             @Test
@@ -64,8 +64,8 @@ class AccountTest {
             @Test
             @DisplayName("has balance equal to the cumulative deposits")
             void hasBalanceEqualToCumulativeDeposits() {
-                account.add(new Entry(amountInDefaultCurrency(1000)));
-                account.add(new Entry(amountInDefaultCurrency(14.35)));
+                account.add(new Entry(transactionId(), amountInDefaultCurrency(1000)));
+                account.add(new Entry(transactionId(), amountInDefaultCurrency(14.35)));
 
                 var exporter = new AccountTestExporter();
                 account.export(exporter);
@@ -79,13 +79,13 @@ class AccountTest {
         class AfterMakingWithdrawals {
             @BeforeEach
             void init() {
-                account.add(new Entry(amountInDefaultCurrency(1064.60)));
+                account.add(new Entry(transactionId(), amountInDefaultCurrency(1064.60)));
             }
 
             @Test
             @DisplayName("has balance equal to the previous balance minus the withdrawal amount")
             void hasBalanceEqualToPreviousBalanceMinusWithdrawalAmount() {
-                account.add(new Entry(amountInDefaultCurrency(-100)));
+                account.add(new Entry(transactionId(), amountInDefaultCurrency(-100)));
 
                 var exporter = new AccountTestExporter();
                 account.export(exporter);
@@ -98,9 +98,9 @@ class AccountTest {
     @Test
     @DisplayName("creates statement with all entries")
     void createsStatementIncludingAllEntries() {
-        account.add(new Entry(amountInDefaultCurrency(100), jun_21_2021()));
-        account.add(new Entry(amountInDefaultCurrency(150), jul_03_2021()));
-        account.add(new Entry(amountInDefaultCurrency(-20), aug_20_2021()));
+        account.add(new Entry(transactionId(), amountInDefaultCurrency(100), jun_21_2021()));
+        account.add(new Entry(transactionId(), amountInDefaultCurrency(150), jul_03_2021()));
+        account.add(new Entry(transactionId(), amountInDefaultCurrency(-20), aug_20_2021()));
 
         var statement = account.createStatement();
 
@@ -134,7 +134,7 @@ class AccountTest {
             }
 
             public List<EntryImporter> entryImporters() {
-                return List.of(new TestEntryImporter(amountInDefaultCurrency(100), jun_21_2021()));
+                return List.of(new TestEntryImporter(null, amountInDefaultCurrency(100), jun_21_2021()));
             }
         };
     }
@@ -180,6 +180,10 @@ class AccountTest {
             this.balance = balance;
         }
 
+    }
+
+    private TransactionId transactionId() {
+        return new TransactionId(UUID.randomUUID().toString());
     }
 
 }

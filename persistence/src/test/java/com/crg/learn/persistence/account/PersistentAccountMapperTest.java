@@ -19,6 +19,7 @@ class PersistentAccountMapperTest {
     private static final String ACCOUNT_NUMBER_VALUE = "9999999999";
     private static final String FIRST_NAME = "Hank";
     private static final String LAST_NAME = "Hill";
+    private static final String TRANSACTION_ID = "678";
 
     private Instant now;
     private Account account;
@@ -30,7 +31,8 @@ class PersistentAccountMapperTest {
         account = make(an(Account, with(numberValue, ACCOUNT_NUMBER_VALUE),
                                    with(accountHolder, new Person(FIRST_NAME, LAST_NAME)),
                                    with(entries, listOf(an(Entry, with(whenBooked, now),
-                                                                  with(entryAmount, oneHundredEuros()))))));
+                                                                  with(entryAmount, oneHundredEuros()),
+                                                                  with(transactionIdValue, TRANSACTION_ID))))));
     }
 
     @Test
@@ -43,17 +45,19 @@ class PersistentAccountMapperTest {
         assertThat(persistentAccount.getHolderFirstName()).isEqualTo(FIRST_NAME);
         assertThat(persistentAccount.getHolderLastName()).isEqualTo(LAST_NAME);
         assertThat(persistentAccount.getEntries()).usingRecursiveComparison()
-                                                  .isEqualTo(expectedEntry());
+                                                  .isEqualTo(expectedEntry(persistentAccount));
     }
 
     private Money oneHundredEuros() {
         return Money.of(100, Monetary.getCurrency("EUR"));
     }
 
-    private List<PersistentEntry> expectedEntry() {
+    private List<PersistentEntry> expectedEntry(PersistentAccount persistentAccount) {
         var persistentEntry = new PersistentEntry();
+        persistentEntry.setTransactionId(TRANSACTION_ID);
         persistentEntry.setAmount(oneHundredEuros());
         persistentEntry.setWhenBooked(now);
+        persistentEntry.setAccount(persistentAccount);
 
         return Collections.singletonList(persistentEntry);
     }

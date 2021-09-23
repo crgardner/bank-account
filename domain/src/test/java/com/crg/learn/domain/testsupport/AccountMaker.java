@@ -7,7 +7,7 @@ import org.javamoney.moneta.Money;
 
 import javax.money.Monetary;
 import java.time.Instant;
-import java.util.Collections;
+import java.util.*;
 
 import static com.natpryce.makeiteasy.Property.*;
 
@@ -17,12 +17,20 @@ public class AccountMaker {
     public static final Property<Account, String> numberValue = newProperty();
 
     public static final Property<Account, Iterable<Entry>> entries = newProperty();
+    public static final Property<Entry, String> transactionIdValue = newProperty();
     public static final Property<Entry, Money> entryAmount = newProperty();
     public static final Property<Entry, Instant> whenBooked = newProperty();
 
     public static final Instantiator<Entry> Entry = lookup ->
-            new Entry(lookup.valueOf(entryAmount, Money.zero(Monetary.getCurrency("EUR"))),
+            new Entry(transactionIdFrom(lookup),
+                      lookup.valueOf(entryAmount, Money.zero(Monetary.getCurrency("EUR"))),
                       lookup.valueOf(whenBooked, Instant.now()));
+
+    private static TransactionId transactionIdFrom(PropertyLookup<Entry> lookup) {
+        var value = lookup.valueOf(transactionIdValue, UUID.randomUUID().toString());
+
+        return new TransactionId(value);
+    }
 
     public static final Instantiator<Account> Account = lookup -> {
         var account = new Account(accountNumberFrom(lookup), lookup.valueOf(accountHolder, new Person("Ford", "Prefect")));

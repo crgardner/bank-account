@@ -15,12 +15,7 @@ public class PersistentAccount {
     @Column(name = "holder_last_name")
     private String holderLastName;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "entry",
-            joinColumns = @JoinColumn(name = "account_number")
-    )
-
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @SuppressWarnings("all")
     private List<PersistentEntry> entries = new ArrayList<>();
 
@@ -54,5 +49,6 @@ public class PersistentAccount {
 
     public void add(PersistentEntry entry) {
         entries.add(entry);
+        entry.setAccount(this);
     }
 }

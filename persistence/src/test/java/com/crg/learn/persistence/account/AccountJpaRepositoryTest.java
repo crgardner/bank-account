@@ -30,6 +30,7 @@ class AccountJpaRepositoryTest {
         account.setHolderLastName("last");
 
         var entry = new PersistentEntry();
+        entry.setTransactionId("888");
         entry.setWhenBooked(Instant.now());
         entry.setAmount(Money.zero(Monetary.getCurrency("EUR")));
 

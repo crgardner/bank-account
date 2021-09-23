@@ -39,8 +39,9 @@ class PersistentAccountMapper implements AccountExporter {
     }
 
     @Override
-    public void addEntry(Instant whenBooked, Money amount) {
+    public void addEntry(TransactionId transactionId, Instant whenBooked, Money amount) {
         var persistentEntry = new PersistentEntry();
+        persistentEntry.setTransactionId(transactionId.value());
         persistentEntry.setAmount(amount);
         persistentEntry.setWhenBooked(whenBooked);
         persistentAccount.add(persistentEntry);
