@@ -3,7 +3,7 @@ package com.crg.learning.controller.test.support;
 import com.crg.learn.usecase.concept.UseCase;
 import org.mockito.invocation.InvocationOnMock;
 
-import java.util.function.BiConsumer;
+import java.util.function.*;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -19,6 +19,15 @@ public final class UseCaseMocking {
             O responder = responderFrom(useCaseInvocation);
 
             actionToPerform.accept(request, responder);
+            return null;
+        }).when(useCase).execute(any(), any());
+    }
+
+    public static <I, O> void prepare(UseCase<I, O> useCase, Consumer<O> actionToPerform) {
+        doAnswer(useCaseInvocation -> {
+            O responder = responderFrom(useCaseInvocation);
+
+            actionToPerform.accept(responder);
             return null;
         }).when(useCase).execute(any(), any());
     }

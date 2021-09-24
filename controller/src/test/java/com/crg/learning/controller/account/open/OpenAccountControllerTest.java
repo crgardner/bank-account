@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.money.Monetary;
-import java.util.function.BiConsumer;
+import java.util.function.*;
 
 import static com.crg.learning.controller.test.support.UseCaseMocking.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -43,9 +43,9 @@ class OpenAccountControllerTest {
                .andExpect(content().json(expectedAccountResource()));
     }
 
-    private BiConsumer<OpenAccountRequest, OpenAccountResponder> toProvideNewlyOpenedAccount() {
-        return (request, responder) ->
-                responder.accept(new AccountResponse("123", "Ford", "Prefect", Money.zero(Monetary.getCurrency("EUR"))));
+    private Consumer<OpenAccountResponder> toProvideNewlyOpenedAccount() {
+        return responder -> responder.accept(new AccountResponse("123", "Ford", "Prefect",
+                                                                 Money.zero(Monetary.getCurrency("EUR"))));
     }
 
     private String openAccountPostBody() {

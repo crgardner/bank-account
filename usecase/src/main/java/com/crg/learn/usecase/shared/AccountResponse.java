@@ -9,4 +9,8 @@ public record AccountResponse(String accountNumber, String ownerFirstName, Strin
     public AccountResponse(String accountNumber, String ownerFirstName, String ownerLastName, Money balance) {
         this(accountNumber, ownerFirstName, ownerLastName, balance, Collections.emptyList());
     }
+
+    public Optional<EntryResponse> firstEntry() {
+        return entryResponses().stream().findFirst();
+    }
 }

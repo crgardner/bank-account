@@ -2,7 +2,6 @@ package com.crg.learning.controller.account.adjust;
 
 import com.crg.learn.usecase.account.adjust.AdjustAccountResponder;
 import com.crg.learn.usecase.shared.*;
-import com.crg.learning.controller.account.shared.AccountResourceMapper;
 import org.javamoney.moneta.Money;
 import org.springframework.http.ResponseEntity;
 
@@ -10,16 +9,18 @@ import java.net.URI;
 
 public class AdjustAccountPresenter implements AdjustAccountResponder {
 
-    private final AccountResourceMapper accountResourceMapper = new AccountResourceMapper();
     private ResponseEntity<Object> entity;
 
     @Override
     public void accept(AccountResponse response) {
-        var entry = response.entryResponses().get(0);
+        response.firstEntry().ifPresentOrElse(entry -> map(entry, response), this::onNotFound);
+    }
+
+    private void map(EntryResponse entry, AccountResponse response) {
         var viewModel = new AdjustmentViewModel(response.accountNumber(),
-                                                formatted(response.balance()),
-                                                response.balance().getCurrency().getCurrencyCode(),
-                                                entry.transactionId(), formatted(entry.amount())
+                formatted(response.balance()),
+                response.balance().getCurrency().getCurrencyCode(),
+                entry.transactionId(), formatted(entry.amount())
         );
         entity = ResponseEntity.created(uriFrom(response, entry)).body(viewModel);
     }

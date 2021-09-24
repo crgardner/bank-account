@@ -16,8 +16,10 @@ public class AdjustAccountController {
         this.useCase = useCase;
     }
 
-    @PostMapping(value = "/banking/v1/accounts/{account-id}/adjustments", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> adjustAccount(@PathVariable ("account-id") String accountId, @RequestBody AccountAdjustmentResource resource) {
+    @PostMapping(value = "/banking/v1/accounts/{account-id}/adjustments", consumes = APPLICATION_JSON_VALUE,
+                                                                          produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> adjustAccount(@PathVariable ("account-id") String accountId,
+                                                @RequestBody AccountAdjustmentResource resource) {
         var request = requestFrom(accountId, resource);
         var presenter = new AdjustAccountPresenter();
 

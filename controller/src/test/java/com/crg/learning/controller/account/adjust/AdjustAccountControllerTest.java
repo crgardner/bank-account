@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import javax.money.Monetary;
 import java.time.Instant;
 import java.util.Collections;
-import java.util.function.BiConsumer;
+import java.util.function.*;
 
 import static com.crg.learning.controller.test.support.UseCaseMocking.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -72,9 +72,9 @@ class AdjustAccountControllerTest {
                 """;
     }
 
-    private BiConsumer<AdjustAccountRequest, AdjustAccountResponder> toProvideCurrentAccountBalance() {
+    private Consumer<AdjustAccountResponder> toProvideCurrentAccountBalance() {
         var entries = Collections.singletonList(new EntryResponse("abc", now, Money.of(100, Monetary.getCurrency("EUR"))));
-        return (request, responder) ->
+        return (responder) ->
                 responder.accept(new AccountResponse("123","Ford", "Prefect", Money.of(100, Monetary.getCurrency("EUR")), entries));
     }
 
@@ -90,8 +90,8 @@ class AdjustAccountControllerTest {
                 .andExpect(status().is(404));
     }
 
-    private BiConsumer<AdjustAccountRequest, AdjustAccountResponder> toReportAccountNotFound() {
-        return (request, responder) -> responder.onNotFound();
+    private Consumer<AdjustAccountResponder> toReportAccountNotFound() {
+        return AdjustAccountResponder::onNotFound;
     }
 
 }
