@@ -4,8 +4,6 @@ import com.crg.learn.usecase.account.adjust.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
-
 import static org.springframework.http.MediaType.*;
 
 @RestController
@@ -29,7 +27,7 @@ public class AdjustAccountController {
     }
 
     private AdjustAccountRequest requestFrom(String accountId, AccountAdjustmentResource resource) {
-        return new AdjustAccountRequest(accountId, Double.valueOf(resource.amount()), resource.currency());
+        return new AdjustAccountRequest(accountId, Double.parseDouble(resource.amount()), resource.currency());
     }
 
 }

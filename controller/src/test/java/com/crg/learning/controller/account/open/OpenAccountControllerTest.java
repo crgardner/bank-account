@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import javax.money.Monetary;
 import java.util.function.*;
 
+import static com.crg.learning.controller.test.support.MonetaryAmounts.*;
 import static com.crg.learning.controller.test.support.UseCaseMocking.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -44,8 +45,7 @@ class OpenAccountControllerTest {
     }
 
     private Consumer<OpenAccountResponder> toProvideNewlyOpenedAccount() {
-        return responder -> responder.accept(new AccountResponse("123", "Ford", "Prefect",
-                                                                 Money.zero(Monetary.getCurrency("EUR"))));
+        return responder -> responder.accept(new AccountResponse("123", "Ford", "Prefect", euros_0()));
     }
 
     private String openAccountPostBody() {

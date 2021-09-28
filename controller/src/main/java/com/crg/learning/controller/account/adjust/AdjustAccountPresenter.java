@@ -2,6 +2,7 @@ package com.crg.learning.controller.account.adjust;
 
 import com.crg.learn.usecase.account.adjust.AdjustAccountResponder;
 import com.crg.learn.usecase.shared.*;
+import com.crg.learning.controller.account.shared.BasicMoneyFormatter;
 import org.javamoney.moneta.Money;
 import org.springframework.http.ResponseEntity;
 
@@ -26,7 +27,7 @@ public class AdjustAccountPresenter implements AdjustAccountResponder {
     }
 
     private String formatted(Money amount) {
-        return "%.2f".formatted(amount.getNumber().doubleValueExact());
+        return BasicMoneyFormatter.format(amount);
     }
 
     private URI uriFrom(AccountResponse response, EntryResponse entry) {
