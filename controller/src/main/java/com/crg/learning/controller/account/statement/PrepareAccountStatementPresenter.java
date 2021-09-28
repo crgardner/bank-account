@@ -30,7 +30,7 @@ public class PrepareAccountStatementPresenter implements PrepareAccountStatement
 
     @Override
     public void onNotFound() {
-
+        entity = ResponseEntity.notFound().build();
     }
 
     public ResponseEntity<Object> responseEntity() {

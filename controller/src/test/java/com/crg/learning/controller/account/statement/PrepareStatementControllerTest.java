@@ -1,10 +1,12 @@
 package com.crg.learning.controller.account.statement;
 
+import com.crg.learn.usecase.account.adjust.AdjustAccountResponder;
 import com.crg.learn.usecase.account.statement.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -34,9 +36,10 @@ class PrepareStatementControllerTest {
     void controlsRequestsToPrepareStatements() throws Exception {
         prepare(useCase, toProvideStatement());
 
-        mockMvc.perform(get(CLIENT_URI))
+        mockMvc.perform(get(CLIENT_URI)
+                        .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-                .andExpect(content().json(expectedStatementResource()));
+               .andExpect(content().json(expectedStatementResource()));
     }
 
     private Consumer<PrepareAccountStatementResponder> toProvideStatement() {
@@ -64,6 +67,20 @@ class PrepareStatementControllerTest {
                    ]
                 }
                 """;
+    }
+
+    @Test
+    @DisplayName("reports account not found")
+    void reportsAccountNotFound() throws Exception {
+        prepare(useCase, toReportAccountNotFound());
+
+        mockMvc.perform(get(CLIENT_URI)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(404));
+    }
+
+    private Consumer<PrepareAccountStatementResponder> toReportAccountNotFound() {
+        return PrepareAccountStatementResponder::onNotFound;
     }
 
 
