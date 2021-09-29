@@ -3,32 +3,32 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>accountRepository-account</artifactId>
-        <groupId>com.crg.learning</groupId>
+        <artifactId>bank-account</artifactId>
+        <groupId>com.crg.learn</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>application</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.crg.learning</groupId>
+            <groupId>com.crg.learn</groupId>
             <artifactId>interactor</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${parent.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.crg.learning</groupId>
+            <groupId>com.crg.learn</groupId>
             <artifactId>controller</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <version>${parent.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.crg.learning</groupId>
+            <groupId>com.crg.learn</groupId>
             <artifactId>persistence</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${parent.version}</version>
         </dependency>
     </dependencies>
 </project>
