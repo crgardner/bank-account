@@ -11,20 +11,20 @@ public class Account {
 
     private final AccountNumber accountNumber;
     private final Person accountHolder;
-    private final AccountEntries entries;
+    private final Entries entries;
 
     public Account(AccountNumber accountNumber, Person accountHolder) {
-        this(accountNumber, accountHolder, new AccountEntries());
+        this(accountNumber, accountHolder, new Entries());
     }
 
-    private Account(AccountNumber accountNumber, Person accountHolder, AccountEntries entries) {
+    private Account(AccountNumber accountNumber, Person accountHolder, Entries entries) {
         this.accountNumber = accountNumber;
         this.accountHolder = accountHolder;
         this.entries = entries;
     }
 
     public Account(AccountImporter importer) {
-        this(importer.accountNumber(), importer.accountHolder(), new AccountEntries(importer.entryImporters()));
+        this(importer.accountNumber(), importer.accountHolder(), new Entries(importer.entryImporters()));
     }
 
     public void add(Entry entry) {

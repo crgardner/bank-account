@@ -7,14 +7,14 @@ import javax.money.CurrencyUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
-class AccountEntries {
+class Entries {
     private final List<Entry> entries;
 
-    AccountEntries() {
+    Entries() {
         this.entries = new ArrayList<>();
     }
 
-    AccountEntries(List<EntryImporter> entryImporters) {
+    Entries(List<EntryImporter> entryImporters) {
         this.entries = entryImporters.stream().map(Entry::new).collect(Collectors.toList());
     }
 

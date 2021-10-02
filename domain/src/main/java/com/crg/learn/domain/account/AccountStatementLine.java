@@ -4,18 +4,18 @@ import org.javamoney.moneta.Money;
 
 import java.time.Instant;
 
-public class AccountStatementLine {
+class AccountStatementLine {
     private final Money amount;
     private final Instant whenBooked;
     private final Money balance;
 
-    public AccountStatementLine(Money amount, Instant whenBooked, Money balance) {
+    AccountStatementLine(Money amount, Instant whenBooked, Money balance) {
         this.amount = amount;
         this.whenBooked = whenBooked;
         this.balance = balance;
     }
 
-    public void export(AccountStatementExporter reader) {
+    void export(AccountStatementExporter reader) {
         reader.addLine(whenBooked, amount, balance);
     }
 }

@@ -24,15 +24,15 @@ public class Entry {
         this(importer.transactionId(), importer.amount(), importer.whenBooked());
     }
 
-    public void adjust(MonetaryRunningBalance runningBalance) {
+    void adjust(MonetaryRunningBalance runningBalance) {
         runningBalance.adjust(amount);
     }
 
-    public AccountStatementLine createStatementLine(MonetaryRunningBalance runningBalance) {
+    AccountStatementLine createStatementLine(MonetaryRunningBalance runningBalance) {
         return new AccountStatementLine(amount, whenBooked, runningBalance.adjust(amount));
     }
 
-    public void export(AccountExporter exporter) {
+    void export(AccountExporter exporter) {
         exporter.addEntry(transactionId.value(), whenBooked, amount);
     }
 }
