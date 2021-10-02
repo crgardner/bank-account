@@ -15,7 +15,7 @@ public class OpenAccountPresenter extends BasePresenter implements OpenAccountRe
     @Override
     public void accept(AccountResponse response) {
         responseOf(ResponseEntity.created(uriFrom(response))
-                               .body(accountResourceFrom(response)));
+                                 .body(accountResourceFrom(response)));
     }
 
     private URI uriFrom(AccountResponse response) {

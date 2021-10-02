@@ -12,12 +12,11 @@ public class PrepareAccountStatementPresenter extends BasePresenter implements P
     @Override
     public void accept(PrepareStatementResponse response) {
         var viewModel = response.lines().stream().map(this::toLine)
-                                                .collect(collectingAndThen(toList(), StatementViewModel::new));
+                                                 .collect(collectingAndThen(toList(), StatementViewModel::new));
         responseOf(ResponseEntity.ok(viewModel));
     }
 
     private Line toLine(PrepareStatementResponseLine responseLine) {
-
         return new Line(responseLine.whenBooked().toString(),
                         creditOrDebit(responseLine),
                         BasicMoneyFormatter.formatAbs(responseLine.amount()),
