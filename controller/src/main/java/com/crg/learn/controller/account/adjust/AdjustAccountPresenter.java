@@ -1,5 +1,6 @@
 package com.crg.learn.controller.account.adjust;
 
+import com.crg.learn.controller.presenter.BasePresenter;
 import com.crg.learn.usecase.account.adjust.AdjustAccountResponder;
 import com.crg.learn.usecase.shared.*;
 import com.crg.learn.controller.account.shared.BasicMoneyFormatter;
@@ -8,9 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.net.URI;
 
-public class AdjustAccountPresenter implements AdjustAccountResponder {
-
-    private ResponseEntity<Object> entity;
+public class AdjustAccountPresenter extends BasePresenter implements AdjustAccountResponder {
 
     @Override
     public void accept(AccountResponse response) {
@@ -24,7 +23,7 @@ public class AdjustAccountPresenter implements AdjustAccountResponder {
                                                 entry.transactionId(), formatted(entry.amount())
         );
 
-        entity = ResponseEntity.created(uriFrom(response, entry)).body(viewModel);
+        responseOf(ResponseEntity.created(uriFrom(response, entry)).body(viewModel));
     }
 
     private String formatted(Money amount) {
@@ -36,12 +35,4 @@ public class AdjustAccountPresenter implements AdjustAccountResponder {
                                                                              entry.transactionId()));
     }
 
-    @Override
-    public void onNotFound() {
-        entity = ResponseEntity.notFound().build();
-    }
-
-    public ResponseEntity<Object> responseEntity() {
-        return entity;
-    }
 }

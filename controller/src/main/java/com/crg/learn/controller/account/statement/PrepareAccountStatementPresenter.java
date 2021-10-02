@@ -1,18 +1,19 @@
 package com.crg.learn.controller.account.statement;
 
+import com.crg.learn.controller.presenter.BasePresenter;
 import com.crg.learn.usecase.account.statement.*;
 import com.crg.learn.controller.account.shared.BasicMoneyFormatter;
 import org.springframework.http.ResponseEntity;
 
 import static java.util.stream.Collectors.*;
 
-public class PrepareAccountStatementPresenter implements PrepareAccountStatementResponder {
-    private ResponseEntity<Object> entity;
+public class PrepareAccountStatementPresenter extends BasePresenter implements PrepareAccountStatementResponder {
 
     @Override
     public void accept(PrepareStatementResponse response) {
-        var resource = response.lines().stream().map(this::toLine).collect(collectingAndThen(toList(), StatementViewModel::new));
-        entity = ResponseEntity.ok(resource);
+        var viewModel = response.lines().stream().map(this::toLine)
+                                                .collect(collectingAndThen(toList(), StatementViewModel::new));
+        responseOf(ResponseEntity.ok(viewModel));
     }
 
     private Line toLine(PrepareStatementResponseLine responseLine) {
@@ -20,7 +21,7 @@ public class PrepareAccountStatementPresenter implements PrepareAccountStatement
         return new Line(responseLine.whenBooked().toString(),
                         creditOrDebit(responseLine),
                         BasicMoneyFormatter.formatAbs(responseLine.amount()),
-                        BasicMoneyFormatter.formatAbs(responseLine.balance())
+                        BasicMoneyFormatter.format(responseLine.balance())
         );
     }
 
@@ -28,12 +29,5 @@ public class PrepareAccountStatementPresenter implements PrepareAccountStatement
         return responseLine.amount().isNegative() ? "DEBIT" : "CREDIT";
     }
 
-    @Override
-    public void onNotFound() {
-        entity = ResponseEntity.notFound().build();
-    }
 
-    public ResponseEntity<Object> responseEntity() {
-        return entity;
-    }
 }
