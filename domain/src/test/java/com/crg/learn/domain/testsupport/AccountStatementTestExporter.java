@@ -1,11 +1,12 @@
-package com.crg.learn.domain.account;
+package com.crg.learn.domain.testsupport;
 
+import com.crg.learn.domain.account.AccountStatementExporter;
 import org.javamoney.moneta.Money;
 
 import java.time.Instant;
 import java.util.*;
 
-class AccountStatementTestExporter implements AccountStatementExporter {
+public class AccountStatementTestExporter implements AccountStatementExporter {
     private final List<AccountStatementEntryExporter> statementEntries = new ArrayList<>();
 
     @Override
@@ -13,7 +14,7 @@ class AccountStatementTestExporter implements AccountStatementExporter {
         statementEntries.add(new AccountStatementEntryExporter(whenBooked, amount, balance));
     }
 
-    List<AccountStatementEntryExporter> statementEntries() {
+    public List<AccountStatementEntryExporter> statementEntries() {
         return statementEntries;
     }
 

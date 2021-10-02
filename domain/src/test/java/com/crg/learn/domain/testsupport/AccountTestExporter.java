@@ -1,24 +1,25 @@
-package com.crg.learn.domain.account;
+package com.crg.learn.domain.testsupport;
 
+import com.crg.learn.domain.account.AccountExporter;
 import org.javamoney.moneta.Money;
 
 import java.time.Instant;
 import java.util.*;
 
-class AccountTestExporter implements AccountExporter {
+public class AccountTestExporter implements AccountExporter {
 
+    private final List<EntryTestExporter> entries = new ArrayList<>();
     private String accountNumber;
     private String ownerFirstName;
     private String ownerLastName;
     private Money balance;
-    private List<EntryTestExporter> entries = new ArrayList<>();
 
     @Override
     public void accountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
-    String accountNumber() {
+    public String accountNumber() {
         return accountNumber;
     }
 
@@ -27,7 +28,7 @@ class AccountTestExporter implements AccountExporter {
         this.ownerFirstName = ownerFirstName;
     }
 
-    String ownerFirstName() {
+    public String ownerFirstName() {
         return ownerFirstName;
     }
 
@@ -36,7 +37,7 @@ class AccountTestExporter implements AccountExporter {
         this.ownerLastName = ownerLastName;
     }
 
-    String ownerLastName() {
+    public String ownerLastName() {
         return ownerLastName;
     }
 
@@ -45,7 +46,7 @@ class AccountTestExporter implements AccountExporter {
         this.balance = balance;
     }
 
-    Money balance() {
+    public Money balance() {
         return balance;
     }
 
@@ -54,7 +55,7 @@ class AccountTestExporter implements AccountExporter {
         entries.add(new EntryTestExporter(transactionId, whenBooked, amount));
     }
 
-    List<EntryTestExporter> entries() {
+    public List<EntryTestExporter> entries() {
         return entries;
     }
 }

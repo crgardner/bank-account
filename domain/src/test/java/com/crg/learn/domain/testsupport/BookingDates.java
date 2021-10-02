@@ -1,9 +1,9 @@
-package com.crg.learn.domain.account;
+package com.crg.learn.domain.testsupport;
 
 import java.time.*;
 import java.util.Map;
 
-class BookingDates {
+public class BookingDates {
 
     private static final Map<String, Instant> BOOKING_DATES = Map.of(
             "jun_21_2021", whenBooked(6, 21, 16, 0),
@@ -15,15 +15,15 @@ class BookingDates {
         return LocalDateTime.of(2021, month, dayOfMonth, hour, minute).toInstant(ZoneOffset.UTC);
     }
 
-    static Instant jun_21_2021() {
+    public static Instant jun_21_2021() {
         return BOOKING_DATES.get("jun_21_2021");
     }
 
-    static Instant jul_03_2021() {
+    public static Instant jul_03_2021() {
         return BOOKING_DATES.get("jul_03_2021");
     }
 
-    static Instant aug_20_2021() {
+    public static Instant aug_20_2021() {
         return BOOKING_DATES.get("aug_20_2021");
     }
 

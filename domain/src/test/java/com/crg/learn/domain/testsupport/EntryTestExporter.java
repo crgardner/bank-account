@@ -1,4 +1,4 @@
-package com.crg.learn.domain.account;
+package com.crg.learn.domain.testsupport;
 
 import org.javamoney.moneta.Money;
 

@@ -1,7 +1,7 @@
 package com.crg.learn.domain.account;
 
 import com.crg.learn.domain.person.Person;
-import com.crg.learn.domain.testsupport.TestEntryImporter;
+import com.crg.learn.domain.testsupport.*;
 import nl.jqno.equalsverifier.*;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.*;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.*;
 import javax.money.*;
 import java.util.*;
 
-import static com.crg.learn.domain.account.BookingDates.*;
+import static com.crg.learn.domain.testsupport.BookingDates.*;
 import static org.assertj.core.api.Assertions.*;
 
 

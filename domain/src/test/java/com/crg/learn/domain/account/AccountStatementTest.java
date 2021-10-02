@@ -1,12 +1,13 @@
 package com.crg.learn.domain.account;
 
 import com.crg.learn.domain.person.Person;
+import com.crg.learn.domain.testsupport.*;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
 
-import static com.crg.learn.domain.account.BookingDates.*;
+import static com.crg.learn.domain.testsupport.BookingDates.*;
 import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("AccountStatement")
