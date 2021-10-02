@@ -27,7 +27,7 @@ class AccountGatewayTest {
     @BeforeEach
     void init() {
         adapter = new AccountGateway(repository);
-        account = make(an(Account));
+        account = make(an(Account, with(entries, listOf(an(Entry)))));
         persistentAccount = new PersistentAccountMapper(account).map();
     }
 
