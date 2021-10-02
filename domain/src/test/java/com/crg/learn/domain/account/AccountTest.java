@@ -2,11 +2,11 @@ package com.crg.learn.domain.account;
 
 import com.crg.learn.domain.person.Person;
 import com.crg.learn.domain.testsupport.TestEntryImporter;
+import nl.jqno.equalsverifier.*;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.*;
 
 import javax.money.*;
-import java.time.Instant;
 import java.util.*;
 
 import static com.crg.learn.domain.account.BookingDates.*;
@@ -38,7 +38,7 @@ class AccountTest {
             var exporter = new AccountTestExporter();
             account.export(exporter);
 
-            assertThat(exporter.balance).isEqualTo(Money.zero(DEFAULT_CURRENCY));
+            assertThat(exporter.balance()).isEqualTo(Money.zero(DEFAULT_CURRENCY));
         }
 
         @Nested
@@ -58,7 +58,7 @@ class AccountTest {
                 var exporter = new AccountTestExporter();
                 account.export(exporter);
 
-                assertThat(exporter.balance).isEqualTo(depositAmount);
+                assertThat(exporter.balance()).isEqualTo(depositAmount);
             }
 
             @Test
@@ -70,7 +70,7 @@ class AccountTest {
                 var exporter = new AccountTestExporter();
                 account.export(exporter);
 
-                assertThat(exporter.balance).isEqualTo(amountInDefaultCurrency(1064.60));
+                assertThat(exporter.balance()).isEqualTo(amountInDefaultCurrency(1064.60));
             }
         }
 
@@ -90,7 +90,7 @@ class AccountTest {
                 var exporter = new AccountTestExporter();
                 account.export(exporter);
 
-                assertThat(exporter.balance).isEqualTo(amountInDefaultCurrency(964.60));
+                assertThat(exporter.balance()).isEqualTo(amountInDefaultCurrency(964.60));
             }
         }
     }
@@ -115,11 +115,23 @@ class AccountTest {
 
         account.export(EntrySelectionRange.ALL, exporter);
 
-        assertThat(exporter.accountNumber).isEqualTo("123");
-        assertThat(exporter.balance).isEqualTo(amountInDefaultCurrency(100));
-        assertThat(exporter.ownerFirstName).isEqualTo("Zippy");
-        assertThat(exporter.ownerLastName).isEqualTo("Foo");
-        assertThat(exporter.entries).containsOnly(new EntryTestExporter("999", jun_21_2021(), amountInDefaultCurrency(100)));
+        assertThat(exporter.accountNumber()).isEqualTo("123");
+        assertThat(exporter.balance()).isEqualTo(amountInDefaultCurrency(100));
+        assertThat(exporter.ownerFirstName()).isEqualTo("Zippy");
+        assertThat(exporter.ownerLastName()).isEqualTo("Foo");
+        assertThat(exporter.entries()).containsOnly(new EntryTestExporter("999", jun_21_2021(),
+                                                                          amountInDefaultCurrency(100)));
+    }
+
+    @Test
+    @DisplayName("honors equals and hashcode contracts")
+    void honorsEqualAndHashCodeContracts() {
+        EqualsVerifier.forClass(Account.class).suppress(Warning.NULL_FIELDS,
+                                                        Warning.STRICT_INHERITANCE,
+                                                        Warning.INHERITED_DIRECTLY_FROM_OBJECT,
+                                                        Warning.ALL_FIELDS_SHOULD_BE_USED,
+                                                        Warning.NONFINAL_FIELDS)
+                                              .verify();
     }
 
     private AccountImporter importer() {
@@ -135,7 +147,8 @@ class AccountTest {
             }
 
             public List<EntryImporter> entryImporters() {
-                return List.of(new TestEntryImporter(new TransactionId("999"), amountInDefaultCurrency(100), jun_21_2021()));
+                return List.of(new TestEntryImporter(new TransactionId("999"), amountInDefaultCurrency(100),
+                                                     jun_21_2021()));
             }
         };
     }
@@ -152,40 +165,6 @@ class AccountTest {
 
     private Money amountInDefaultCurrency(Number amount) {
         return Money.of(amount, DEFAULT_CURRENCY);
-    }
-
-    private static class AccountTestExporter implements AccountExporter {
-
-        private String accountNumber;
-        private String ownerFirstName;
-        private String ownerLastName;
-        private Money balance;
-        private List<EntryTestExporter> entries = new ArrayList<>();
-
-        @Override
-        public void accountNumber(String accountNumber) {
-            this.accountNumber = accountNumber;
-        }
-
-        @Override
-        public void ownerFirstName(String ownerFirstName) {
-            this.ownerFirstName = ownerFirstName;
-        }
-
-        @Override
-        public void ownerLastName(String ownerLastName) {
-            this.ownerLastName = ownerLastName;
-        }
-
-        @Override
-        public void balance(Money balance) {
-            this.balance = balance;
-        }
-
-        @Override
-        public void addEntry(String transactionId, Instant whenBooked, Money amount) {
-            entries.add(new EntryTestExporter(transactionId, whenBooked, amount));
-        }
     }
 
     private TransactionId transactionId() {

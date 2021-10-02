@@ -16,7 +16,7 @@ public enum EntrySelectionRange {
             return entries.isEmpty() ? entries : Collections.singletonList(entries.get(entries.size() - 1));
         }
     },
-
     ;
+
     public abstract List<Entry> select(List<Entry> entries);
 }
