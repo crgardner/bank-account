@@ -22,7 +22,7 @@ public class OpenAccountPresenter implements OpenAccountResponder {
         return URI.create("/banking/accounts/v1/%s".formatted(response.accountNumber()));
     }
 
-    private AccountResource accountResourceFrom(AccountResponse response) {
+    private AccountViewModel accountResourceFrom(AccountResponse response) {
         return accountResourceMapper.accountResourceFrom(response);
     }
 

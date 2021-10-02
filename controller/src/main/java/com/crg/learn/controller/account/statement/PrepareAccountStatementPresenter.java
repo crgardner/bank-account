@@ -11,7 +11,7 @@ public class PrepareAccountStatementPresenter implements PrepareAccountStatement
 
     @Override
     public void accept(PrepareStatementResponse response) {
-        var resource = response.lines().stream().map(this::toLine).collect(collectingAndThen(toList(), Statement::new));
+        var resource = response.lines().stream().map(this::toLine).collect(collectingAndThen(toList(), StatementViewModel::new));
         entity = ResponseEntity.ok(resource);
     }
 

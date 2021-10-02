@@ -17,8 +17,8 @@ public class AdjustAccountController {
     @PostMapping(value = "/banking/v1/accounts/{account-id}/adjustments", consumes = APPLICATION_JSON_VALUE,
                                                                           produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> adjustAccount(@PathVariable ("account-id") String accountId,
-                                                @RequestBody AccountAdjustmentResource resource) {
-        var request = requestFrom(accountId, resource);
+                                                @RequestBody AdjustAccountDetails details) {
+        var request = requestFrom(accountId, details);
         var presenter = new AdjustAccountPresenter();
 
         useCase.execute(request, presenter);
@@ -26,8 +26,8 @@ public class AdjustAccountController {
         return presenter.responseEntity();
     }
 
-    private AdjustAccountRequest requestFrom(String accountId, AccountAdjustmentResource resource) {
-        return new AdjustAccountRequest(accountId, Double.parseDouble(resource.amount()), resource.currency());
+    private AdjustAccountRequest requestFrom(String accountId, AdjustAccountDetails details) {
+        return new AdjustAccountRequest(accountId, Double.parseDouble(details.amount()), details.currency());
     }
 
 }

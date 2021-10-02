@@ -19,10 +19,11 @@ public class AdjustAccountPresenter implements AdjustAccountResponder {
 
     private void map(EntryResponse entry, AccountResponse response) {
         var viewModel = new AdjustmentViewModel(response.accountNumber(),
-                formatted(response.balance()),
-                response.balance().getCurrency().getCurrencyCode(),
-                entry.transactionId(), formatted(entry.amount())
+                                                formatted(response.balance()),
+                                                response.balance().getCurrency().getCurrencyCode(),
+                                                entry.transactionId(), formatted(entry.amount())
         );
+
         entity = ResponseEntity.created(uriFrom(response, entry)).body(viewModel);
     }
 
@@ -31,7 +32,8 @@ public class AdjustAccountPresenter implements AdjustAccountResponder {
     }
 
     private URI uriFrom(AccountResponse response, EntryResponse entry) {
-        return URI.create("/banking/v1/accounts/%s/adjustments/%s".formatted(response.accountNumber(), entry.transactionId()));
+        return URI.create("/banking/v1/accounts/%s/adjustments/%s".formatted(response.accountNumber(),
+                                                                             entry.transactionId()));
     }
 
     @Override

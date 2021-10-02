@@ -14,9 +14,10 @@ public class OpenAccountController {
         this.useCase = useCase;
     }
 
-    @PostMapping(value = "/banking/v1/accounts", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> openAccount(@RequestBody AccountOpenResource resource) {
-        var request = requestFrom(resource);
+    @PostMapping(value = "/banking/v1/accounts", consumes = APPLICATION_JSON_VALUE,
+                                                 produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> openAccount(@RequestBody OpenAccountDetails details) {
+        var request = requestFrom(details);
         var presenter = new OpenAccountPresenter();
 
         useCase.execute(request, presenter);
@@ -24,7 +25,7 @@ public class OpenAccountController {
         return presenter.responseEntity();
     }
 
-    private OpenAccountRequest requestFrom(AccountOpenResource resource) {
-        return new OpenAccountRequest(resource.firstName(), resource.lastName());
+    private OpenAccountRequest requestFrom(OpenAccountDetails details) {
+        return new OpenAccountRequest(details.firstName(), details.lastName());
     }
 }

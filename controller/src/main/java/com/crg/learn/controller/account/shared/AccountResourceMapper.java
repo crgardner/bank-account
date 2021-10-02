@@ -3,8 +3,8 @@ package com.crg.learn.controller.account.shared;
 import com.crg.learn.usecase.shared.AccountResponse;
 
 public class AccountResourceMapper {
-    public AccountResource accountResourceFrom(AccountResponse response) {
-        return new AccountResource(response.accountNumber(),
+    public AccountViewModel accountResourceFrom(AccountResponse response) {
+        return new AccountViewModel(response.accountNumber(),
                                    response.ownerFirstName(),
                                    response.ownerLastName(),
                                    BasicMoneyFormatter.format(response.balance()),

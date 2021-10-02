@@ -2,7 +2,11 @@ package com.crg.learn.controller.account.shared;
 
 import org.javamoney.moneta.Money;
 
-public class BasicMoneyFormatter {
+public final class BasicMoneyFormatter {
+    private BasicMoneyFormatter() {
+        // no-op
+    }
+
     public static String formatAbs(Money amount) {
         return format(amount.abs());
     }
