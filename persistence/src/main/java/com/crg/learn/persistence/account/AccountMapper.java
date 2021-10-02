@@ -33,10 +33,11 @@ public class AccountMapper implements AccountImporter {
 
     private EntryImporter toEntryImporter(PersistentEntry persistentEntry) {
         return new EntryMapper(new TransactionId(persistentEntry.getTransactionId()), persistentEntry.getAmount(),
-                                persistentEntry.getWhenBooked());
+                                                 persistentEntry.getWhenBooked());
     }
 
-    private static record EntryMapper(TransactionId transactionId, Money amount, Instant whenBooked) implements EntryImporter {
+    private static record EntryMapper(TransactionId transactionId, Money amount, Instant whenBooked)
+            implements EntryImporter {
 
     }
 }

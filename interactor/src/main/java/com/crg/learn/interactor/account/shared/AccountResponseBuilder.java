@@ -8,11 +8,11 @@ import java.time.Instant;
 import java.util.*;
 
 public class AccountResponseBuilder implements AccountExporter {
+    private final List<EntryResponse> entries = new ArrayList<>();
     private String accountNumberValue;
     private String firstNameValue;
     private String lastNameValue;
     private Money balanceValue;
-    private List<EntryResponse> entries = new ArrayList<>();
 
     @Override
     public void accountNumber(String accountNumberValue) {

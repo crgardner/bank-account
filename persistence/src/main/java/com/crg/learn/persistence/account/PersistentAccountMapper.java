@@ -19,18 +19,18 @@ class PersistentAccountMapper implements AccountExporter {
     }
 
     @Override
-    public void accountNumber(String value) {
-        persistentAccount.setAccountNumber(value);
+    public void accountNumber(String accountNumber) {
+        persistentAccount.setAccountNumber(accountNumber);
     }
 
     @Override
-    public void ownerFirstName(String value) {
-        persistentAccount.setHolderFirstName(value);
+    public void ownerFirstName(String ownerFirstName) {
+        persistentAccount.setHolderFirstName(ownerFirstName);
     }
 
     @Override
-    public void ownerLastName(String value) {
-        persistentAccount.setHolderLastName(value);
+    public void ownerLastName(String ownerLastName) {
+        persistentAccount.setHolderLastName(ownerLastName);
     }
 
     @Override
@@ -41,9 +41,11 @@ class PersistentAccountMapper implements AccountExporter {
     @Override
     public void addEntry(String transactionId, Instant whenBooked, Money amount) {
         var persistentEntry = new PersistentEntry();
+
         persistentEntry.setTransactionId(transactionId);
         persistentEntry.setAmount(amount);
         persistentEntry.setWhenBooked(whenBooked);
+
         persistentAccount.add(persistentEntry);
     }
 }

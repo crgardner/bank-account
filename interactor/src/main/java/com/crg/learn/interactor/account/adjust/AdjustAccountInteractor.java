@@ -50,10 +50,10 @@ public class AdjustAccountInteractor implements AdjustAccountUseCase {
     }
 
     private void respond(AdjustAccountResponder responder, Account account) {
-        var builder = new AccountResponseBuilder();
-        account.export(EntrySelectionRange.MOST_RECENT, builder);
+        var exporter = new AccountResponseBuilder();
+        account.export(EntrySelectionRange.MOST_RECENT, exporter);
 
-        responder.accept(builder.build());
+        responder.accept(exporter.build());
     }
 
 }
