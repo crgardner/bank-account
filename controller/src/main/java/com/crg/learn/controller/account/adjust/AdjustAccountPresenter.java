@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.net.URI;
 
-public class AdjustAccountPresenter extends BasePresenter implements AdjustAccountResponder {
+class AdjustAccountPresenter extends BasePresenter implements AdjustAccountResponder {
 
     @Override
     public void accept(AccountResponse response) {
@@ -17,13 +17,16 @@ public class AdjustAccountPresenter extends BasePresenter implements AdjustAccou
     }
 
     private void map(EntryResponse entry, AccountResponse response) {
-        var viewModel = new AdjustmentViewModel(response.accountNumber(),
-                                                formatted(response.balance()),
-                                                response.balance().getCurrency().getCurrencyCode(),
-                                                entry.transactionId(), formatted(entry.amount())
-        );
+        var viewModel = viewModelFrom(entry, response);
 
         responseOf(ResponseEntity.created(uriFrom(response, entry)).body(viewModel));
+    }
+
+    private AdjustmentViewModel viewModelFrom(EntryResponse entry, AccountResponse response) {
+        return new AdjustmentViewModel(response.accountNumber(),
+                                       formatted(response.balance()),
+                                       response.balance().getCurrency().getCurrencyCode(),
+                                       entry.transactionId(), formatted(entry.amount()));
     }
 
     private String formatted(Money amount) {

@@ -7,24 +7,29 @@ import org.springframework.http.ResponseEntity;
 
 import static java.util.stream.Collectors.*;
 
-public class PrepareAccountStatementPresenter extends BasePresenter implements PrepareAccountStatementResponder {
+class PrepareAccountStatementPresenter extends BasePresenter implements PrepareAccountStatementResponder {
 
     @Override
     public void accept(PrepareStatementResponse response) {
-        var viewModel = response.lines().stream().map(this::toLine)
-                                                 .collect(collectingAndThen(toList(), StatementViewModel::new));
+        var viewModel = viewModelFrom(response);
+
         responseOf(ResponseEntity.ok(viewModel));
+    }
+
+    private StatementViewModel viewModelFrom(PrepareStatementResponse response) {
+        return response.lines().stream().map(this::toLine)
+                                        .collect(collectingAndThen(toList(), StatementViewModel::new));
     }
 
     private Line toLine(PrepareStatementResponseLine responseLine) {
         return new Line(responseLine.whenBooked().toString(),
-                        creditOrDebit(responseLine),
+                        debitOrCredit(responseLine),
                         BasicMoneyFormatter.formatAbs(responseLine.amount()),
                         BasicMoneyFormatter.format(responseLine.balance())
         );
     }
 
-    private String creditOrDebit(PrepareStatementResponseLine responseLine) {
+    private String debitOrCredit(PrepareStatementResponseLine responseLine) {
         return responseLine.amount().isNegative() ? "DEBIT" : "CREDIT";
     }
 
