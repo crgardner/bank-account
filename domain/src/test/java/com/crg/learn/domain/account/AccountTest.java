@@ -16,13 +16,12 @@ import static org.assertj.core.api.Assertions.*;
 @DisplayName("Account")
 class AccountTest {
     private Account account;
-    private AccountNumber accountNumber;
-    private Person accountHolder;
 
     @BeforeEach
     void init() {
-        accountNumber = new AccountNumber("123X99948715");
-        accountHolder = new Person("Zippy", "Foo");
+        var accountNumber = new AccountNumber("123X99948715");
+        var accountHolder = new Person("Zippy", "Foo");
+
         account = new Account(accountNumber, accountHolder);
     }
 
@@ -158,7 +157,7 @@ class AccountTest {
             new AccountStatementLine(amountInDefaultCurrency(-20), aug_20_2021(), amountInDefaultCurrency(230))
         );
 
-        return new AccountStatement(accountNumber, accountHolder, new AccountStatementLines(lines));
+        return new AccountStatement(new AccountStatementLines(lines));
     }
 
     private TransactionId transactionId() {

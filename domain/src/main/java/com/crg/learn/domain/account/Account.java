@@ -50,7 +50,7 @@ public class Account {
     }
 
     public AccountStatement createStatement() {
-        return new AccountStatement(accountNumber, accountHolder, entries.createStatementLines(DEFAULT_CURRENCY));
+        return new AccountStatement(entries.createStatementLines(DEFAULT_CURRENCY));
     }
 
     @Override
@@ -70,6 +70,5 @@ public class Account {
     public int hashCode() {
         return Objects.hash(accountNumber, accountHolder);
     }
-
 
 }

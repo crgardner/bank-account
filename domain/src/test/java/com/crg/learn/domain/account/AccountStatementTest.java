@@ -1,6 +1,5 @@
 package com.crg.learn.domain.account;
 
-import com.crg.learn.domain.person.Person;
 import com.crg.learn.domain.testsupport.*;
 import org.junit.jupiter.api.*;
 
@@ -21,7 +20,7 @@ class AccountStatementTest {
                 new AccountStatementLine(amountInDefaultCurrency(150), jul_03_2021(), amountInDefaultCurrency(250)),
                 new AccountStatementLine(amountInDefaultCurrency(-20), aug_20_2021(), amountInDefaultCurrency(230)));
 
-        statement = new AccountStatement(new AccountNumber("123"), new Person("first", "last"), new AccountStatementLines(lines));
+        statement = new AccountStatement(new AccountStatementLines(lines));
     }
 
     @Test
