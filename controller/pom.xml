@@ -14,7 +14,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.crg.learn</groupId>
+            <groupId>${parent.groupId}</groupId>
             <artifactId>usecase</artifactId>
             <version>${parent.version}</version>
         </dependency>

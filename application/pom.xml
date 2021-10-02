@@ -14,19 +14,19 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.crg.learn</groupId>
+            <groupId>${parent.groupId}</groupId>
             <artifactId>interactor</artifactId>
             <version>${parent.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.crg.learn</groupId>
+            <groupId>${parent.groupId}</groupId>
             <artifactId>controller</artifactId>
             <version>${parent.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.crg.learn</groupId>
+            <groupId>${parent.groupId}</groupId>
             <artifactId>persistence</artifactId>
             <version>${parent.version}</version>
         </dependency>

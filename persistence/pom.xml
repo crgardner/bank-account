@@ -14,9 +14,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>${parent.groupId}</groupId>
             <artifactId>domain</artifactId>
-            <version>${project.version}</version>
+            <version>${parent.version}</version>
         </dependency>
 
         <dependency>
@@ -30,9 +30,9 @@
         </dependency>
 
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>${parent.groupId}</groupId>
             <artifactId>domain</artifactId>
-            <version>${project.version}</version>
+            <version>${parent.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
