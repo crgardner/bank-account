@@ -49,7 +49,7 @@ class OpenAccountInteractorTest implements OpenAccountResponder {
 
     private AccountResponse expectedResponse() {
         return new AccountResponse(ACCOUNT_NUMBER, "Ford", "Prefect",
-                                   Money.of(0, Monetary.getCurrency("EUR")));
+                                   Money.zero(Monetary.getCurrency("EUR")));
     }
 
     @Override

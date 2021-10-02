@@ -6,17 +6,15 @@ import nl.jqno.equalsverifier.*;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.*;
 
-import javax.money.*;
 import java.util.*;
 
 import static com.crg.learn.domain.testsupport.BookingDates.*;
+import static com.crg.learn.domain.testsupport.MonetaryAmounts.*;
 import static org.assertj.core.api.Assertions.*;
 
 
 @DisplayName("Account")
 class AccountTest {
-    private static final CurrencyUnit DEFAULT_CURRENCY = Monetary.getCurrency("EUR");
-
     private Account account;
     private AccountNumber accountNumber;
     private Person accountHolder;
@@ -38,7 +36,7 @@ class AccountTest {
             var exporter = new AccountTestExporter();
             account.export(exporter);
 
-            assertThat(exporter.balance()).isEqualTo(Money.zero(DEFAULT_CURRENCY));
+            assertThat(exporter.balance()).isEqualTo(zero());
         }
 
         @Nested
@@ -161,10 +159,6 @@ class AccountTest {
         );
 
         return new AccountStatement(accountNumber, accountHolder, new AccountStatementLines(lines));
-    }
-
-    private Money amountInDefaultCurrency(Number amount) {
-        return Money.of(amount, DEFAULT_CURRENCY);
     }
 
     private TransactionId transactionId() {
