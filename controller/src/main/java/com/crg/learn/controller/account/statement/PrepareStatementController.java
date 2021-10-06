@@ -14,10 +14,10 @@ public class PrepareStatementController {
         this.useCase = useCase;
     }
 
-    @GetMapping(value = "/banking/v1/accounts/{account-id}/statement", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> prepareStatement(@PathVariable("account-id") String accountId) {
+    @GetMapping(value = "/banking/v1/accounts/{account-number}/statement", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> prepareStatement(@PathVariable("account-number") String accountNumber) {
         var presenter = new PrepareAccountStatementPresenter();
-        useCase.execute(new PrepareAccountStatementRequest(accountId), presenter);
+        useCase.execute(new PrepareAccountStatementRequest(accountNumber), presenter);
 
         return presenter.responseEntity();
     }

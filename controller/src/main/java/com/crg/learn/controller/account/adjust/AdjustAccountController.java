@@ -14,11 +14,11 @@ public class AdjustAccountController {
         this.useCase = useCase;
     }
 
-    @PostMapping(value = "/banking/v1/accounts/{account-id}/adjustments", consumes = APPLICATION_JSON_VALUE,
-                                                                          produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> adjustAccount(@PathVariable ("account-id") String accountId,
+    @PostMapping(value = "/banking/v1/accounts/{account-number}/adjustments", consumes = APPLICATION_JSON_VALUE,
+                                                                              produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> adjustAccount(@PathVariable ("account-number") String accountNumber,
                                                 @RequestBody AdjustAccountDetails details) {
-        var request = requestFrom(accountId, details);
+        var request = requestFrom(accountNumber, details);
         var presenter = new AdjustAccountPresenter();
 
         useCase.execute(request, presenter);
@@ -26,8 +26,8 @@ public class AdjustAccountController {
         return presenter.responseEntity();
     }
 
-    private AdjustAccountRequest requestFrom(String accountId, AdjustAccountDetails details) {
-        return new AdjustAccountRequest(accountId, Double.parseDouble(details.amount()), details.currency());
+    private AdjustAccountRequest requestFrom(String accountNumber, AdjustAccountDetails details) {
+        return new AdjustAccountRequest(accountNumber, Double.parseDouble(details.amount()), details.currency());
     }
 
 }

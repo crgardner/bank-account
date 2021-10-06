@@ -20,8 +20,8 @@ class OpenAccountPresenter extends BasePresenter implements OpenAccountResponder
         return URI.create("/banking/accounts/v1/%s".formatted(response.accountNumber()));
     }
 
-    private AccountViewModel viewModelFrom(AccountResponse response) {
-        return new AccountViewModel(response.accountNumber(),
+    private OpenAccountViewModel viewModelFrom(AccountResponse response) {
+        return new OpenAccountViewModel(response.accountNumber(),
                                     response.ownerFirstName(),
                                     response.ownerLastName(),
                                     BasicMoneyFormatter.format(response.balance()),
