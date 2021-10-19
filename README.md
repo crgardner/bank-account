@@ -1,6 +1,6 @@
 # bank-account
 
-bank-account is a Java 16 Spring Boot application that is used as an example of the Clean Architecture. The application allows you to:
+bank-account is a Java 17 Spring Boot application used as an example of the Clean Architecture. The application allows you to:
 
 * Open accounts
 * Adjust accounts with deposits and withdrawals
@@ -10,7 +10,7 @@ It uses the h2 database in-memory database for convenience.
 
 ## Installation
 
-1. Install JDK version 16. [SDKMAN!](https://sdkman.io/) makes it quite easy.
+1. Install JDK version 17. [SDKMAN!](https://sdkman.io/) makes it quite easy.
 1. Ensure a recent version of Maven is installed. SDKMAN! can help with that too.
 1. Clone this repo.
 1. In the root directory of the clone, run the following:
